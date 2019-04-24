@@ -4,9 +4,9 @@
 package nhs.cardiff.genetics.ngssamplesheets;
 
 /**
- * @author Rhys Cooper
- * @Date 14/08/2017
- * @version 1.3
+ * @author Rhys Cooper & Sara Rey
+ * @Date 17/04/2019
+ * @version 1.4.3
  * 
  */
 import java.lang.*;
@@ -33,6 +33,7 @@ public class ExportSampleSheet {
 	private String wcbPipeline;
 	private String brcaPipeline;
 	private String tamPipeline;
+	private String crukPipeline;
 	private String myeloidPipeline;
 	private String panCancerPipeline;
 	private int crukRow;
@@ -113,6 +114,7 @@ public class ExportSampleSheet {
 		  wcbPipeline = properties.getProperty("WCB");
 		  brcaPipeline = properties.getProperty("BRCA");
 		  tamPipeline = properties.getProperty("TAM");
+		  crukPipeline = properties.getProperty("CRUK");
 		  myeloidPipeline = properties.getProperty("MYELOID");
 
 		} catch (IOException e) {
@@ -222,6 +224,9 @@ public class ExportSampleSheet {
 						cell.setCellValue(ind.getIndexSelect().toString());
 					}
 
+					// SPECIFIC TO CRUK
+					cell = row.createCell(9);
+					cell.setCellValue(crukPipeline);
 
 				}else if(select.equalsIgnoreCase("TAM")){
 					// SPECIFIC TO TAM
@@ -308,10 +313,11 @@ public class ExportSampleSheet {
 		}
 		
 		if(select.equalsIgnoreCase("TRUSIGHT")){
-			rowNum = 14;
+			rowNum = truRow;
 		}else if(select.equalsIgnoreCase("TRUSIGHTONE")){
-			rowNum = 17;
+			rowNum = truOneRow;
 		}
+		/*
 		for (int i = 0; i < ws.getComments().size(); i++) {
 			if(ws.getComments().get(i) != null){
 				row = worksheet.getRow(rowNum);
@@ -320,7 +326,7 @@ public class ExportSampleSheet {
 			}
 			rowNum += 1;
 		}
-		
+		*/
 		if(select.equalsIgnoreCase("TRUSIGHT")){
 			save(workbook, "", "Trusight");
 		}else if(select.equalsIgnoreCase("TRUSIGHTONE")){
