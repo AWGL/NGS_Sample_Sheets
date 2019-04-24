@@ -55,6 +55,7 @@ public class ExportSampleSheet {
 		tamRow = 14;
 		wcbRow = 14;
 		myeloidRow = 17;
+		//panCancerRow = ?;
 	}
 
 	/**
@@ -83,8 +84,8 @@ public class ExportSampleSheet {
 			exportWCB(ws, index, "CRM", wcbRow, "Y:\\samplesheet-templates\\WCB.xls");
 		}else if(test.equalsIgnoreCase("haem NGS")) {
 			exportCRUKTAMMye(ws, index, "MYELOID", myeloidRow, "Y:\\samplesheet-templates\\Myeloid.xls");
-		}else if(test.equalsIgnoreCase("PaNCanCer")) {
-			call function
+		}else if(test.equalsIgnoreCase("PaNCanCer??")) {
+			//exportPanCancer(ws, index, "PANCANCER", panCancerRow, "Y:\\samplesheet-templates\\PanCancer.xls");;
 	}
 }
 
@@ -116,6 +117,7 @@ public class ExportSampleSheet {
 		  tamPipeline = properties.getProperty("TAM");
 		  crukPipeline = properties.getProperty("CRUK");
 		  myeloidPipeline = properties.getProperty("MYELOID");
+		  panCancerPipeline = properties.getProperty("PANCANCER");
 
 		} catch (IOException e) {
 			
@@ -142,6 +144,8 @@ public class ExportSampleSheet {
 			filepath = "L:\\Auto NGS Sample sheets\\Trusight One\\";
 		} else if (assay.equals("myeloid")) {
 			filepath = "L:\\Auto NGS Sample sheets\\Myeloid\\";
+		} else if (assay.equals("p4nCanc3r")) {
+			filepath = "L:\\Auto NGS Sample sheets\\???????\\";
 		}
 		
 		if (type.equals("analysis")) {
@@ -400,6 +404,10 @@ public class ExportSampleSheet {
 		}
 
 		save(workbook, "", "WCB");
+	}
+
+	private void exportPanCancer(Worksheet ws, ArrayList<Index> index, String select, int rowNum, String file) throws IOException {
+		//PanCancer logic here
 	}
 	
 	/**
