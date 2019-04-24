@@ -108,6 +108,7 @@ public class ImportWorksheet {
 					+ " DNA_Worksheet.UPDATEDBY,"
 					+ " DNA_WORKSHEET_DET.WORKSHEET,"
 					+ " PATIENT.SEX"
+					+ " DNALAB.REASON_FOR_REFERRAL"
 					+ " FROM (((DNA_Worksheet LEFT JOIN DNA_TEST"
 					+ " ON [DNA_Worksheet].TEST = [DNA_TEST].TEST)"
 					+ " INNER JOIN DNA_WORKSHEET_DET"

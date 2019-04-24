@@ -34,6 +34,7 @@ public class ExportSampleSheet {
 	private String brcaPipeline;
 	private String tamPipeline;
 	private String myeloidPipeline;
+	private String panCancerPipeline;
 	private int crukRow;
 	//private int crukAnRow;
 	private int truRow;
@@ -41,7 +42,8 @@ public class ExportSampleSheet {
 	private int tamRow;
 	private int wcbRow;
 	private int myeloidRow;
-	
+	private int panCancerRow;
+
 	public ExportSampleSheet() {
 		properties();
 		filepath = "";
@@ -78,8 +80,10 @@ public class ExportSampleSheet {
 			exportCRUKTAMMye(ws, index, "TAM", tamRow, "Y:\\samplesheet-templates\\TAMGeneRead.xls");
 		}else if(test.equalsIgnoreCase("CRM panel")){
 			exportWCB(ws, index, "CRM", wcbRow, "Y:\\samplesheet-templates\\WCB.xls");
-		}else if(test.equalsIgnoreCase("haem NGS")){
+		}else if(test.equalsIgnoreCase("haem NGS")) {
 			exportCRUKTAMMye(ws, index, "MYELOID", myeloidRow, "Y:\\samplesheet-templates\\Myeloid.xls");
+		}else if(test.equalsIgnoreCase("PaNCanCer")) {
+			call function
 	}
 }
 
