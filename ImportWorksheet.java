@@ -147,6 +147,7 @@ public class ImportWorksheet {
 				ws.setTest(rs.getString("TEST"));
 				ws.setUpdateDate(rs.getString("UPDATEDDATE").substring(2, 10).replace("-", "/"));
 				ws.setSexes(rs.getString("SEX"));
+				ws.setGenes(rs.getString("REASON_FOR_REFERRAL"));
 		
 				// Check if NGS worksheet
 				// Gets size - 1 to pick to the last entry
