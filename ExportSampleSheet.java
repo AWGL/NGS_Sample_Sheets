@@ -408,6 +408,7 @@ public class ExportSampleSheet {
 
 	private void exportPanCancer(Worksheet ws, ArrayList<Index> index, String select, int rowNum, String file) throws IOException {
 		//PanCancer logic here
+		// add referral reason to description field as referral=
 	}
 	
 	/**
