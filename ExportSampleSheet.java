@@ -55,7 +55,7 @@ public class ExportSampleSheet {
 		tamRow = 14;
 		wcbRow = 14;
 		myeloidRow = 17;
-		//panCancerRow = ?;
+		panCancerRow = 18;
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class ExportSampleSheet {
 		}else if(test.equalsIgnoreCase("haem NGS")) {
 			exportCRUKTAMMye(ws, index, "MYELOID", myeloidRow, "Y:\\samplesheet-templates\\Myeloid.xls");
 		}else if(test.equalsIgnoreCase("PaNCanCer??")) {
-			//exportPanCancer(ws, index, "PANCANCER", panCancerRow, "Y:\\samplesheet-templates\\PanCancer.xls");;
+			exportPanCancer(ws, index, "PANCANCER", panCancerRow, "Y:\\samplesheet-templates\\PanCancer.xls");;
 	}
 }
 
@@ -144,7 +144,7 @@ public class ExportSampleSheet {
 			filepath = "L:\\Auto NGS Sample sheets\\Trusight One\\";
 		} else if (assay.equals("myeloid")) {
 			filepath = "L:\\Auto NGS Sample sheets\\Myeloid\\";
-		} else if (assay.equals("p4nCanc3r")) {
+		} else if (assay.equals("pancancer")) {
 			filepath = "L:\\Auto NGS Sample sheets\\???????\\";
 		}
 		
@@ -407,8 +407,32 @@ public class ExportSampleSheet {
 	}
 
 	private void exportPanCancer(Worksheet ws, ArrayList<Index> index, String select, int rowNum, String file) throws IOException {
-		//PanCancer logic here
-		// add referral reason to description field as referral=
+		FileInputStream fileIn = new FileInputStream(file);
+		HSSFWorkbook workbook = new HSSFWorkbook(fileIn);
+		HSSFSheet worksheet = workbook.getSheet("Sheet1");
+		HSSFRow row = worksheet.getRow(2);
+		HSSFCell cell = row.createCell(1);
+		cell.setCellValue(ws.getUser().get(0) + "-NHS");
+
+		row = worksheet.getRow(3);
+		cell = row.createCell(1);
+		cell.setCellValue(ws.getWorksheet().get(0));
+		worksheetName = ws.getWorksheet().get(0);
+
+		for (int i = 0; i < ws.getLabNo().size(); i++) {
+			if(ws.getLabNo().get(i) != null) {
+				row = worksheet.getRow(rowNum);
+				cell = row.createCell(0);
+				cell.setCellValue(ws.getLabNo().get(i));
+				cell = row.createCell(1);
+				cell.setCellValue(ws.getWorksheet().get(i));
+				cell = row.createCell(8);
+				cell.setCellValue(panCancerPipeline +  ";referral=" + ws.getGenes().get(i));
+
+		}
+
+			save(workbook, "", "pancancer");
+
 	}
 	
 	/**
