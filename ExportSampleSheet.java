@@ -6,7 +6,7 @@ package nhs.cardiff.genetics.ngssamplesheets;
 /**
  * @author Rhys Cooper & Sara Rey
  * @Date 17/04/2019
- * @version 1.4.3
+ * @version 1.4.4
  * 
  */
 import java.lang.*;
@@ -427,7 +427,8 @@ public class ExportSampleSheet {
 				cell = row.createCell(1);
 				cell.setCellValue(ws.getWorksheet().get(i));
 				cell = row.createCell(8);
-				cell.setCellValue(panCancerPipeline +  ";referral=" + ws.getGenes().get(i));
+				cell.setCellValue(panCancerPipeline + ";referral=" + ws.getGenes().get(i));
+			}
 
 		}
 

@@ -6,7 +6,7 @@ package nhs.cardiff.genetics.ngssamplesheets;
 /**
  * @author Rhys Cooper & Sara Rey
  * @Date 17/04/2019
- * @version 1.4.3
+ * @version 1.4.4
  * 
  */
 
