@@ -168,7 +168,7 @@ public class ImportWorksheet {
 								|| temp.equalsIgnoreCase("BRCA panel") && (done == false)
 								|| temp.equalsIgnoreCase("GeneRead pooled") && (done == false)
 								|| temp.equalsIgnoreCase("haem NGS") && (done == false)
-							    || temp.equalsIgnoreCase("pAAAAAAAAAAANNNNNNNCAAAA") && (done == false)){
+							    || temp.equalsIgnoreCase("PanCancerNGS Panel") && (done == false)){
 							ws.setPanel(temp);
 							ws.setComments(rs2.getString("COMMENTS"));
 							done = true;
@@ -216,7 +216,7 @@ public class ImportWorksheet {
 				|| (test.equals("BRCA panel"))
 				|| (test.equals("GeneRead pooled"))
 				|| (test.equals("haem NGS"))
-		        || (test.equals("p4nnnnnnnnnnnnnncc"))) {
+		        || (test.equals("PanCancerNGS Panel"))) {
 			goNGS = true;
 		} else {
 			goNGS = false;
