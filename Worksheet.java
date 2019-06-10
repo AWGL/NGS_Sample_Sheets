@@ -13,6 +13,7 @@ public class Worksheet {
 	private ArrayList<String> panel;
 	private ArrayList<String> comments;
 	private ArrayList<String> sexes;
+	private ArrayList<String> genes;
 	
 	public Worksheet(){
 		this.worksheet = new ArrayList<String>();
@@ -24,6 +25,7 @@ public class Worksheet {
 		this.panel = new ArrayList<String>();
 		this.comments = new ArrayList<String>();
 		this.sexes = new ArrayList<String>();
+		this.genes = new ArrayList<String>();
 	}
 
 	/**
@@ -167,5 +169,18 @@ public class Worksheet {
 	public void setSexes(String sexes) {
 		this.sexes.add(sexes);
 	}
-	
+
+	/**
+	 *
+	 * @return Returns genes, The genes to be analysed (TAM) or panel applied (PanCancer).
+	 */
+	public ArrayList<String> getGenes() { return genes; }
+
+	/**
+	 *
+	 * @param genes The genes to be analysed (TAM) or panel applied (PanCancer).
+	 */
+	public void setGenes(String genes) {
+		this.genes.add(genes);
+	}
 }
