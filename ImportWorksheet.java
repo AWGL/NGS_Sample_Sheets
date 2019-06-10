@@ -107,7 +107,7 @@ public class ImportWorksheet {
 					+ " DNA_Worksheet.WORKSHEET,"
 					+ " DNA_Worksheet.UPDATEDBY,"
 					+ " DNA_WORKSHEET_DET.WORKSHEET,"
-					+ " PATIENT.SEX"
+					+ " PATIENT.SEX,"
 					+ " DNALAB.REASON_FOR_REFERRAL"
 					+ " FROM (((DNA_Worksheet LEFT JOIN DNA_TEST"
 					+ " ON [DNA_Worksheet].TEST = [DNA_TEST].TEST)"
@@ -168,7 +168,7 @@ public class ImportWorksheet {
 								|| temp.equalsIgnoreCase("BRCA panel") && (done == false)
 								|| temp.equalsIgnoreCase("GeneRead pooled") && (done == false)
 								|| temp.equalsIgnoreCase("haem NGS") && (done == false)
-							    || temp.equalsIgnoreCase("PanCancerNGS Panel") && (done == false)){
+							    || temp.equalsIgnoreCase("PanCancerNGS panel") && (done == false)){
 							ws.setPanel(temp);
 							ws.setComments(rs2.getString("COMMENTS"));
 							done = true;
