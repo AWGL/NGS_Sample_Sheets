@@ -216,7 +216,7 @@ public class ImportWorksheet {
 				|| (test.equals("BRCA panel"))
 				|| (test.equals("GeneRead pooled"))
 				|| (test.equals("haem NGS"))
-		        || (test.equals("PanCancerNGS Panel"))) {
+		        || (test.equals("PanCancerNGS panel"))) {
 			goNGS = true;
 		} else {
 			goNGS = false;

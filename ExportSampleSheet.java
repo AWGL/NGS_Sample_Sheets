@@ -446,6 +446,8 @@ public class ExportSampleSheet {
 				cell.setCellValue(panCancerPipeline + ";referral=" + ws.getGenes().get(i) + ";sex=" + sex);
 			}
 
+			rowNum += 1;
+
 		}
 
 			save(workbook, "", "pancancer");
