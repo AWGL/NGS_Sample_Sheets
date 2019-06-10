@@ -84,8 +84,8 @@ public class ExportSampleSheet {
 			exportWCB(ws, index, "CRM", wcbRow, "Y:\\samplesheet-templates\\WCB.xls");
 		}else if(test.equalsIgnoreCase("haem NGS")) {
 			exportCRUKTAMMye(ws, index, "MYELOID", myeloidRow, "Y:\\samplesheet-templates\\Myeloid.xls");
-		}else if(test.equalsIgnoreCase("PaNCanCer??")) {
-			exportPanCancer(ws, index, "PANCANCER", panCancerRow, "Y:\\samplesheet-templates\\PanCancer.xls");;
+		}else if(test.equalsIgnoreCase("PanCancerNGS panel")) {
+			exportPanCancer(ws, index, "PANCANCER", panCancerRow, "Y:\\samplesheet-templates\\Pancancer.xls");;
 	}
 }
 
@@ -145,7 +145,7 @@ public class ExportSampleSheet {
 		} else if (assay.equals("myeloid")) {
 			filepath = "L:\\Auto NGS Sample sheets\\Myeloid\\";
 		} else if (assay.equals("pancancer")) {
-			filepath = "L:\\Auto NGS Sample sheets\\???????\\";
+			filepath = "L:\\Auto NGS Sample sheets\\Pancancer\\";
 		}
 		
 		if (type.equals("analysis")) {
@@ -427,7 +427,23 @@ public class ExportSampleSheet {
 				cell = row.createCell(1);
 				cell.setCellValue(ws.getWorksheet().get(i));
 				cell = row.createCell(8);
-				cell.setCellValue(panCancerPipeline + ";referral=" + ws.getGenes().get(i));
+
+				String sex;
+
+				// Put sexes in ped file format
+				if (ws.getSexes().get(i) != null) {
+					if (ws.getSexes().get(i).equals("M")) {
+						sex = "1";
+					} else if (ws.getSexes().get(i).equals("F")) {
+						sex = "2";
+					} else {
+						sex = "0"; // Sex is not known
+					}
+				} else {
+					sex = "0";
+				}
+
+				cell.setCellValue(panCancerPipeline + ";referral=" + ws.getGenes().get(i) + ";sex=" + sex);
 			}
 
 		}
