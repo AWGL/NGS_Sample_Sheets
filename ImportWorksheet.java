@@ -148,6 +148,8 @@ public class ImportWorksheet {
 				ws.setUpdateDate(rs.getString("UPDATEDDATE").substring(2, 10).replace("-", "/"));
 				ws.setSexes(rs.getString("SEX"));
 				ws.setGenes(rs.getString("REASON_FOR_REFERRAL"));
+
+				//UPDATE - If pancancer (front end selection) add indices to ws object in order
 		
 				// Check if NGS worksheet
 				// Gets size - 1 to pick to the last entry

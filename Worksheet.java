@@ -14,6 +14,8 @@ public class Worksheet {
 	private ArrayList<String> comments;
 	private ArrayList<String> sexes;
 	private ArrayList<String> genes;
+	private ArrayList<String> first;
+	private ArrayList<String> second;
 	
 	public Worksheet(){
 		this.worksheet = new ArrayList<String>();
@@ -26,6 +28,8 @@ public class Worksheet {
 		this.comments = new ArrayList<String>();
 		this.sexes = new ArrayList<String>();
 		this.genes = new ArrayList<String>();
+		this.first = new ArrayList<String>();
+		this.second = new ArrayList<String>();
 	}
 
 	/**
@@ -183,4 +187,32 @@ public class Worksheet {
 	public void setGenes(String genes) {
 		this.genes.add(genes);
 	}
+
+    /**
+     *
+     * @return Returns first, The first index for pan cancer samples.
+     */
+    public ArrayList<String> getPanFirstIndex() { return first; }
+
+    /**
+     *
+     * @param first The first index for pan cancer samples.
+     */
+    public void setPanFirstIndex(String first) {
+        this.first.add(first);
+    }
+
+    /**
+     *
+     * @return Returns second, The second index for pan cancer samples (reverse complement).
+     */
+    public ArrayList<String> getPanSecondIndex() { return second; }
+
+    /**
+     *
+     * @param second The second index for pan cancer samples (reverse complement).
+     */
+    public void getPanSecondIndex(String second) {
+        this.second.add(second);
+    }
 }
