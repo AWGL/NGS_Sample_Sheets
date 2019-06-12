@@ -426,6 +426,10 @@ public class ExportSampleSheet {
 				cell.setCellValue(ws.getLabNo().get(i));
 				cell = row.createCell(1);
 				cell.setCellValue(ws.getWorksheet().get(i));
+
+				//UPDATE- Write out indexes to sample sheet here
+
+
 				cell = row.createCell(8);
 
 				String sex;
@@ -444,6 +448,7 @@ public class ExportSampleSheet {
 				}
 
 				cell.setCellValue(panCancerPipeline + ";referral=" + ws.getGenes().get(i) + ";sex=" + sex);
+
 			}
 
 			rowNum += 1;
