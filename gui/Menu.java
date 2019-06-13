@@ -6,9 +6,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 /**
- * @author Rhys Cooper
- * @Date 14/08/2017
- * @version 1.4.4
+ * @author Rhys Cooper and Sara Rey
+ * @Date 13/06/2019
+ * @version 1.4.5
  * 
  */
 public class Menu {
@@ -16,12 +16,15 @@ public class Menu {
 	private JMenu wsNo = new JMenu();
 	private JMenu options = new JMenu();
 	private JMenu combine = new JMenu();
+	private JMenu panIndices = new JMenu();
 	JMenuItem ws1 = new JMenuItem();
 	JMenuItem ws2 = new JMenuItem();
 	JMenuItem ws3 = new JMenuItem();
 	JMenuItem ws4 = new JMenuItem();
 	JCheckBox combineYes = new JCheckBox("Yes");
 	JCheckBox combineNo = new JCheckBox("No");
+	JCheckBox panYes = new JCheckBox("Yes");
+	JCheckBox panNo = new JCheckBox("No");
 	JMenuBar menuBar = new JMenuBar();
 
 	public Menu(){
@@ -41,10 +44,16 @@ public class Menu {
 		combine.add(combineYes);
 		combine.add(combineNo);
 
+		// PANCANCER SUBMENU
+		panIndices = new JMenu("PanIndices");
+		panIndices.add(panYes);
+		panIndices.add(panNo);
+
 		// MAIN MENU ITEM
 		options = new JMenu("Options");
 		options.add(wsNo);
 		options.add(combine);
+		options.add(panIndices);
 		
 		// MAIN MENU BAR
 		menuBar.add(options);	
