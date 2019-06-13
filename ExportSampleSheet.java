@@ -5,8 +5,8 @@ package nhs.cardiff.genetics.ngssamplesheets;
 
 /**
  * @author Rhys Cooper & Sara Rey
- * @Date 17/04/2019
- * @version 1.4.4
+ * @Date 13/06/2019
+ * @version 1.4.5
  * 
  */
 import java.lang.*;
@@ -419,8 +419,12 @@ public class ExportSampleSheet {
 		cell.setCellValue(ws.getWorksheet().get(0));
 		worksheetName = ws.getWorksheet().get(0);
 
+		//Get number of samples on worksheet to populate correct number of indexes
+		int numIndexes = ws.getLabNo().size();
+
 		for (int i = 0; i < ws.getLabNo().size(); i++) {
 			if(ws.getLabNo().get(i) != null) {
+				int indexOffset= (rowNum - panCancerRow);
 				row = worksheet.getRow(rowNum);
 				cell = row.createCell(0);
 				cell.setCellValue(ws.getLabNo().get(i));
@@ -428,7 +432,14 @@ public class ExportSampleSheet {
 				cell.setCellValue(ws.getWorksheet().get(i));
 
 				//UPDATE- Write out indexes to sample sheet here
-
+				cell = row.createCell(3);
+				//cell.setCellValue(); //key
+				cell = row.createCell(4);
+				//cell.setCellValue(); //first value from key
+				cell = row.createCell(5);
+				//cell.setCellValue(); //key
+				cell = row.createCell(6);
+				//cell.setCellValue(); //second value from key
 
 				cell = row.createCell(8);
 

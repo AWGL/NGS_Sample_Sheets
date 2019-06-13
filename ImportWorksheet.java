@@ -5,8 +5,8 @@ package nhs.cardiff.genetics.ngssamplesheets;
 
 /**
  * @author Rhys Cooper & Sara Rey
- * @Date 17/04/2019
- * @version 1.4.4
+ * @Date 13/06/2019
+ * @version 1.4.5
  * 
  */
 
@@ -42,16 +42,31 @@ public class ImportWorksheet {
 	 * @param combine Boolean, true if user wishes to combine worksheets into one output file
 	 * @throws Exception Throws exception if the input string is not a valid shire or NGS worksheet
 	 */
-	public void process(ArrayList<String> input, ArrayList<Index> index, Boolean combine) throws Exception{
+	public void process(ArrayList<String> input, ArrayList<Index> index, Boolean combine, Boolean pan) throws Exception{
 		ExportSampleSheet export = new ExportSampleSheet();
 		// reduce input down to amount of worksheets selected
 		// don't need this null removal? Test...
+		System.out.println(input);
 		input.remove(null);
-		for (int i = 0; i < input.size(); i++) {
+
+		//Support where additional input (2 inputs) is appended to end of input array for pan cancer index option
+		int inputEnd = input.size();
+		if (pan){
+			inputEnd = input.size()-2;
+			String indexStart = input.get(input.size()-2);
+			int numIndexes = Integer.parseInt(input.get(input.size()-1));
+			System.out.println(indexStart);
+			System.out.println(numIndexes);
+			PanIndexes pi = new PanIndexes();
+			pi.setStartingIndex(indexStart);
+			System.out.println(pi.getStartingIndex());
+		}
+
+		for (int i = 0; i < inputEnd; i++) {
 			Worksheet ws = new Worksheet();
-			importShire(ws, input.get(i).toString());
-			worksheets.add(ws);
-		}	
+			//importShire(ws, input.get(i).toString()); ###
+			//worksheets.add(ws); '''''''
+		}
 		if(combine == true){			
 			combine(worksheets, index);		
 		}else if(combine == false){	
@@ -206,19 +221,19 @@ public class ImportWorksheet {
 
 	/**
 	 * 
-	 * @param arrayList denoting the name of the test
+	 * @param test denoting the name of the test
 	 * @return true if test a valid NGS test
 	 */
 	private boolean checkInputNGS(String test) {
-		if ((test.equals("NEXTERA NGS"))
-				|| (test.equals("TruSight Cancer"))
-				|| (test.equals("TruSight One CES panel"))
-				|| (test.equals("TAM panel"))
-				|| (test.equals("CRM panel"))
-				|| (test.equals("BRCA panel"))
-				|| (test.equals("GeneRead pooled"))
-				|| (test.equals("haem NGS"))
-		        || (test.equals("PanCancerNGS panel"))) {
+		if ((test.equalsIgnoreCase("NEXTERA NGS"))
+				|| (test.equalsIgnoreCase("TruSight Cancer"))
+				|| (test.equalsIgnoreCase("TruSight One CES panel"))
+				|| (test.equalsIgnoreCase("TAM panel"))
+				|| (test.equalsIgnoreCase("CRM panel"))
+				|| (test.equalsIgnoreCase("BRCA panel"))
+				|| (test.equalsIgnoreCase("GeneRead pooled"))
+				|| (test.equalsIgnoreCase("haem NGS"))
+		        || (test.equalsIgnoreCase("PanCancerNGS panel"))) {
 			goNGS = true;
 		} else {
 			goNGS = false;

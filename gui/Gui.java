@@ -19,8 +19,8 @@ import javax.swing.JTextField;
 
 /**
  * @author Rhys Cooper & Sara Rey
- * @Date 14/08/2017
- * @version 1.4.4
+ * @Date 13/06/2019
+ * @version 1.4.5
  * 
  */
 public class Gui extends Menu {
@@ -39,6 +39,8 @@ public class Gui extends Menu {
 	JTextField inputField2 = new JTextField();
 	JTextField inputField3 = new JTextField();
 	JTextField inputField4 = new JTextField();
+	JTextField inputField5 = new JTextField();
+	JTextField inputField6 = new JTextField();
 	JButton goButton = new JButton();
 	JLabel infoField = new JLabel();
 	
@@ -46,7 +48,7 @@ public class Gui extends Menu {
 		
 		//**************** FRAME ****************
 		// CREATE FRAME
-		JFrame frame = new JFrame("NGS Sample Sheet Generator - Version 1.4.4");
+		JFrame frame = new JFrame("NGS Sample Sheet Generator - Version 1.4.5");
 		frame.setJMenuBar(menuBar);
 		// Add mainpanel which contains all subpanels
 		frame.add(mainPanel());
@@ -92,7 +94,7 @@ public class Gui extends Menu {
 	
 	/**
 	 * 
-	 * @return Returns the infoPanel Component, displays infomation to user
+	 * @return Returns the infoPanel Component, displays information to user
 	 */
 	private Component infoPanel(){
 		
@@ -218,6 +220,24 @@ public class Gui extends Menu {
 		gbc.gridx = 3;
 		gbc.gridy = 0;
 		entryPanel.add(inputField4, gbc);
+
+		// INPUTFIELD 5
+		inputField5= new JTextField(5);
+		inputField5.setMinimumSize(inputField5.getPreferredSize());
+		inputField5.setVisible(false);
+		inputField5.setToolTipText("PanCancer Starting Index");
+		gbc.gridx = 4;
+		gbc.gridy = 0;
+		entryPanel.add(inputField5, gbc);
+
+		// INPUTFIELD 6
+		inputField6= new JTextField(4);
+		inputField6.setMinimumSize(inputField6.getPreferredSize());
+		inputField6.setVisible(false);
+		inputField6.setToolTipText("PanCancer Number of Indexes");
+		gbc.gridx = 5;
+		gbc.gridy = 0;
+		entryPanel.add(inputField6, gbc);
 		
 		return entryPanel;
 	}
