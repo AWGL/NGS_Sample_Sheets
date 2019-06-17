@@ -219,7 +219,7 @@ public class Worksheet {
      *
      * @param second The second index for pan cancer samples (reverse complement).
      */
-    public void getPanSecondIndex(String second) {
+    public void setPanSecondIndex(String second) {
         this.second.add(second);
     }
 }
