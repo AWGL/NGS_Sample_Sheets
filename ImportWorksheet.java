@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.List;
 
 public class ImportWorksheet {
 	private ArrayList<Worksheet> worksheets = new ArrayList<Worksheet>();
@@ -25,12 +26,14 @@ public class ImportWorksheet {
 	private String url;
 	private String user;
 	private String test;
+	private boolean goPan;
 	private boolean go;
 	private boolean goNGS;
 
 	public ImportWorksheet() {
 		go = false;
 		goNGS = false;
+		goPan = false;
 		db = "M:\\Pyrosequencing\\Pyrosequencing Service\\PCR & PYRO spreadsheets\\Log\\IT\\SHIRE COPY FOR PYRO.MDB";
 		url = ("jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + db);
 	}
@@ -51,21 +54,24 @@ public class ImportWorksheet {
 
 		//Support where additional input (2 inputs) is appended to end of input array for pan cancer index option
 		int inputEnd = input.size();
+		String indexStart = "no index";
 		if (pan){
 			inputEnd = input.size()-2;
-			String indexStart = input.get(input.size()-2);
+			indexStart = input.get(input.size()-2);
 			int numIndexes = Integer.parseInt(input.get(input.size()-1));
 			System.out.println(indexStart);
 			System.out.println(numIndexes);
 			PanIndexes pi = new PanIndexes();
 			pi.setStartingIndex(indexStart);
 			System.out.println(pi.getStartingIndex());
+			System.out.println(pi.getPanIndices().keySet());
+
 		}
 
 		for (int i = 0; i < inputEnd; i++) {
 			Worksheet ws = new Worksheet();
-			//importShire(ws, input.get(i).toString()); ###
-			//worksheets.add(ws); '''''''
+			importShire(ws, input.get(i).toString(), indexStart);
+			worksheets.add(ws);
 		}
 		if(combine == true){			
 			combine(worksheets, index);		
@@ -105,9 +111,20 @@ public class ImportWorksheet {
 	 * @param input The input string provided by the user
 	 * @throws Exception Throws exception if the input string is not a valid shire or NGS worksheet
 	 */
-	private void importShire(Worksheet ws, String input) throws Exception{
+	private void importShire(Worksheet ws, String input, String panInd) throws Exception{
 		
 		user = System.getProperty("user.name");
+
+		//Allow worksheets with no pan index through
+		if (!panInd.equals("no index")){
+			//If there is an entry, check it
+			goPan = checkInputPanIndex(panInd);
+			if (!goPan){
+				Exception ex = new Exception("Not a Valid index, please try again");
+				throw ex;
+			}
+		}
+
 		go = checkInputShire(input);
 		User getUser = new User(user);
 		boolean done = false;
@@ -164,7 +181,19 @@ public class ImportWorksheet {
 				ws.setSexes(rs.getString("SEX"));
 				ws.setGenes(rs.getString("REASON_FOR_REFERRAL"));
 
-				//UPDATE - If pancancer (front end selection) add indices to ws object in order
+				//If pancancer (front end selection) add indices to ws object in order
+				if (goPan){
+					//Index of starting index
+
+					//Index of current index
+
+					//Get key from keys
+
+					//Get values from key
+
+					ws.setPanFirstIndex("pllaceeholdeer"); //upppdate
+					ws.setPanSecondIndex("placeeeholder"); //uppdaaate
+				}
 		
 				// Check if NGS worksheet
 				// Gets size - 1 to pick to the last entry
@@ -212,6 +241,22 @@ public class ImportWorksheet {
 		String filter = "(^\\d{1,2}[-]\\d{1,5})";
 		Pattern pattern = Pattern.compile(filter, 2);
 		Matcher matcher = pattern.matcher(worksheetInput);
+
+		if (matcher.find()) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 *
+	 * @param indexInput The input from the user
+	 * @return true if input valid index
+	 */
+	private boolean checkInputPanIndex(String indexInput) {
+		String filter = "((^[A-H]0?[1-9]$)|(^[A-H]1[0-2]$))";
+		Pattern pattern = Pattern.compile(filter, 2);
+		Matcher matcher = pattern.matcher(indexInput);
 
 		if (matcher.find()) {
 			return true;
