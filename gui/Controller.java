@@ -237,8 +237,8 @@ public class Controller{
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if(g.panNo.isSelected()){
-						//g.worksheetLabel.setText("Not Pan");
-						//g.worksheetLabel.setForeground(Color.RED);
+						g.worksheetLabel.setText("Not adding Pan cancer indexes");
+						g.worksheetLabel.setForeground(Color.RED);
 						g.panYes.setSelected(false);
 						g.inputField5.setVisible(false);
 						panIndex = false;

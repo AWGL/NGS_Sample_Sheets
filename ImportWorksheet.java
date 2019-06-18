@@ -51,7 +51,7 @@ public class ImportWorksheet {
 		// don't need this null removal? Test...
 		input.remove(null);
 
-		//Support where additional input (2 inputs) is appended to end of input array for pan cancer index option
+		//Support where one additional input is appended to end of input array for pan cancer index option
 		int inputEnd = input.size();
 		String indexStart = "no index";
 		if (pan) {
@@ -175,6 +175,7 @@ public class ImportWorksheet {
 				ws.setUpdateDate(rs.getString("UPDATEDDATE").substring(2, 10).replace("-", "/"));
 				ws.setSexes(rs.getString("SEX"));
 				ws.setGenes(rs.getString("REASON_FOR_REFERRAL"));
+
 
 				//If pancancer (front end selection) add indices to ws object in order
 				//Only add indexes where there is an associated lab number
