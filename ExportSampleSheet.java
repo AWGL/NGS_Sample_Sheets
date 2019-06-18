@@ -419,19 +419,15 @@ public class ExportSampleSheet {
 		cell.setCellValue(ws.getWorksheet().get(0));
 		worksheetName = ws.getWorksheet().get(0);
 
-		//Get number of samples on worksheet to populate correct number of indexes
-		int numIndexes = ws.getLabNo().size();
-
 		for (int i = 0; i < ws.getLabNo().size(); i++) {
 			if(ws.getLabNo().get(i) != null) {
-				int indexOffset= (rowNum - panCancerRow);
 				row = worksheet.getRow(rowNum);
 				cell = row.createCell(0);
 				cell.setCellValue(ws.getLabNo().get(i));
 				cell = row.createCell(1);
 				cell.setCellValue(ws.getWorksheet().get(i));
 
-				if (ws.getPanFirstIndex().get(i) != null && ws.getPanSecondIndex().get(i) != null) {
+				if (!ws.getPanFirstIndex().isEmpty() && !ws.getPanSecondIndex().isEmpty()) {
 					//Write out indexes to sample sheet
 					cell = row.createCell(3);
 					cell.setCellValue(ws.getPanIndexId().get(i)); //pan index name
