@@ -431,15 +431,17 @@ public class ExportSampleSheet {
 				cell = row.createCell(1);
 				cell.setCellValue(ws.getWorksheet().get(i));
 
-				//UPDATE- Write out indexes to sample sheet here
-				cell = row.createCell(3);
-				//cell.setCellValue(); //key
-				cell = row.createCell(4);
-				//cell.setCellValue(); //first value from key
-				cell = row.createCell(5);
-				//cell.setCellValue(); //key
-				cell = row.createCell(6);
-				//cell.setCellValue(); //second value from key
+				if (ws.getPanFirstIndex().get(i) != null && ws.getPanSecondIndex().get(i) != null) {
+					//Write out indexes to sample sheet
+					cell = row.createCell(3);
+					cell.setCellValue(ws.getPanIndexId().get(i)); //pan index name
+					cell = row.createCell(4);
+					cell.setCellValue(ws.getPanFirstIndex().get(i)); //first pan index
+					cell = row.createCell(5);
+					cell.setCellValue(ws.getPanIndexId().get(i)); //pan index name
+					cell = row.createCell(6);
+					cell.setCellValue(ws.getPanSecondIndex().get(i)); //second pan index
+				}
 
 				cell = row.createCell(8);
 

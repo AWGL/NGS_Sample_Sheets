@@ -138,35 +138,13 @@ public class PanIndexes {
         this.selectStartingIndex = selectStartingIndex;
     }
 
-    /**
-     *
-     * @return Returns selectNumIndex the number of indexes to retrieve from the available list
-     */
-    public String getNumIndex() { return selectNumIndex; }
 
 
     /**
      *
-     * @param selectNumIndex The selected number of indexes to retrieve from the available list
+     * @return Returns panIndices all of the possible keys and indexes for the pan cancer panel
      */
-    public void setNumIndex(String selectNumIndex) {
-        this.selectNumIndex = selectNumIndex;
-    }
-
-
-    //Add params
     public LinkedHashMap<String, List<String>> getPanIndices() { return panIndices; }
-
-
-
-
-    //Code to return a sliced list? of the required indices
-    //Add params
-    //public LinkedHashMap<String, List<String>> getPanIndexRange() {
-
-        //return panIndices.get();
-    //}
-
 
 
 

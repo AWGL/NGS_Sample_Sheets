@@ -41,7 +41,6 @@ public class Controller{
 					indexArray.add(index1);
 					if(panIndex == true) {
 						input.add(g.inputField5.getText());
-						input.add(g.inputField6.getText());
 					}
 				}else if(selected == 2){
 					// 2 Worksheets
@@ -51,7 +50,6 @@ public class Controller{
 					indexArray.add(index2);
 					if(panIndex == true) {
 						input.add(g.inputField5.getText());
-						input.add(g.inputField6.getText());
 					}
 				}else if(selected == 3){
 					// 3 Worksheets
@@ -63,7 +61,6 @@ public class Controller{
 					indexArray.add(index3);
 					if(panIndex == true) {
 						input.add(g.inputField5.getText());
-						input.add(g.inputField6.getText());
 					}
 				}else if(selected == 4){
 					// 4 Worksheets
@@ -77,7 +74,6 @@ public class Controller{
 					indexArray.add(index4);
 					if(panIndex == true) {
 						input.add(g.inputField5.getText());
-						input.add(g.inputField6.getText());
 					}
 				}
 				ImportWorksheet worksheet = new ImportWorksheet();
@@ -226,11 +222,10 @@ public class Controller{
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if(g.panYes.isSelected()){
-						g.worksheetLabel.setText("Pan");
+						g.worksheetLabel.setText("Adding Pan cancer indexes");
 						g.worksheetLabel.setForeground(Color.GREEN);
 						g.panNo.setSelected(false);
 						g.inputField5.setVisible(true);
-						g.inputField6.setVisible(true);
 						panIndex = true;
 					}
 				} catch (Exception localException) {
@@ -242,11 +237,10 @@ public class Controller{
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if(g.panNo.isSelected()){
-						g.worksheetLabel.setText("Not Pan");
-						g.worksheetLabel.setForeground(Color.RED);
+						//g.worksheetLabel.setText("Not Pan");
+						//g.worksheetLabel.setForeground(Color.RED);
 						g.panYes.setSelected(false);
 						g.inputField5.setVisible(false);
-						g.inputField6.setVisible(false);
 						panIndex = false;
 					}
 				} catch (Exception localException) {
