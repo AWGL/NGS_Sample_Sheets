@@ -49,22 +49,14 @@ public class ImportWorksheet {
 		ExportSampleSheet export = new ExportSampleSheet();
 		// reduce input down to amount of worksheets selected
 		// don't need this null removal? Test...
-		System.out.println(input);
 		input.remove(null);
 
 		//Support where additional input (2 inputs) is appended to end of input array for pan cancer index option
 		int inputEnd = input.size();
 		String indexStart = "no index";
-		if (pan){
-			inputEnd = input.size()-2;
-			indexStart = input.get(input.size()-2);
-			int numIndexes = Integer.parseInt(input.get(input.size()-1));
-			System.out.println(indexStart);
-			System.out.println(numIndexes);
-			PanIndexes pi = new PanIndexes();
-			pi.setStartingIndex(indexStart);
-			System.out.println(pi.getStartingIndex());
-			System.out.println(pi.getPanIndices().keySet());
+		if (pan) {
+			inputEnd = input.size() - 1;
+			indexStart = input.get(input.size() - 1);
 
 		}
 
@@ -112,7 +104,7 @@ public class ImportWorksheet {
 	 * @throws Exception Throws exception if the input string is not a valid shire or NGS worksheet
 	 */
 	private void importShire(Worksheet ws, String input, String panInd) throws Exception{
-		
+
 		user = System.getProperty("user.name");
 
 		//Allow worksheets with no pan index through
@@ -163,6 +155,9 @@ public class ImportWorksheet {
 
 
 			ResultSet rs = st.executeQuery();
+
+			int offset = 0;
+
 			while (rs.next()) {
 				ws.setWorksheet(rs.getString("WORKSHEET").toString());
 				String spaceFix = rs.getString("LABNO");
@@ -182,17 +177,29 @@ public class ImportWorksheet {
 				ws.setGenes(rs.getString("REASON_FOR_REFERRAL"));
 
 				//If pancancer (front end selection) add indices to ws object in order
-				if (goPan){
-					//Index of starting index
-
-					//Index of current index
-
-					//Get key from keys
+				//Only add indexes where there is an associated lab number
+				if (goPan && spaceFix != null) {
+					PanIndexes pi = new PanIndexes();
+					pi.setStartingIndex(panInd);
+					List<String> listKeys = new ArrayList<String>(pi.getPanIndices().keySet());
+					//System.out.println(listKeys);
+					//Get the position of the index
+					int keyIndex = listKeys.indexOf(panInd);
+					int currentIndex = (keyIndex + offset);
+					String currentKey = (listKeys.get(currentIndex));
+					ws.setPanIndexId(currentKey);
 
 					//Get values from key
+					List<String> panIndices = pi.getPanIndices().get(currentKey);
+					ws.setPanFirstIndex(panIndices.get(0));
+					ws.setPanSecondIndex(panIndices.get(1));
 
-					ws.setPanFirstIndex("pllaceeholdeer"); //upppdate
-					ws.setPanSecondIndex("placeeeholder"); //uppdaaate
+					//Handle where indexes start again at A1
+					if (currentIndex < listKeys.size()-1) {
+						offset = (offset + 1);
+					} else{
+						offset = -(keyIndex);
+					}
 				}
 		
 				// Check if NGS worksheet

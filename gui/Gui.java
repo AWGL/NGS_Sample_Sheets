@@ -40,7 +40,6 @@ public class Gui extends Menu {
 	JTextField inputField3 = new JTextField();
 	JTextField inputField4 = new JTextField();
 	JTextField inputField5 = new JTextField();
-	JTextField inputField6 = new JTextField();
 	JButton goButton = new JButton();
 	JLabel infoField = new JLabel();
 	
@@ -230,16 +229,8 @@ public class Gui extends Menu {
 		gbc.gridy = 0;
 		entryPanel.add(inputField5, gbc);
 
-		// INPUTFIELD 6
-		inputField6= new JTextField(4);
-		inputField6.setMinimumSize(inputField6.getPreferredSize());
-		inputField6.setVisible(false);
-		inputField6.setToolTipText("PanCancer Number of Indexes");
-		gbc.gridx = 5;
-		gbc.gridy = 0;
-		entryPanel.add(inputField6, gbc);
-		
 		return entryPanel;
+
 	}
 	
 	/**
