@@ -11,9 +11,9 @@ import nhs.cardiff.genetics.ngssamplesheets.ImportWorksheet;
 import nhs.cardiff.genetics.ngssamplesheets.Index;
 
 /**
- * @author Rhys Cooper
- * @Date 14/08/2017
- * @version 1.4.4
+ * @author Rhys Cooper and Sara Rey
+ * @Date 13/06/2019
+ * @version 1.4.5
  * 
  */
 public class Controller{
@@ -22,6 +22,7 @@ public class Controller{
 	private ArrayList<String> input = new ArrayList<String>();
 	private ArrayList<Index> indexArray = new ArrayList<Index>();
 	private Boolean combine = false;
+	private Boolean panIndex = false;
 	Index index1 = new Index();
 	Index index2 = new Index();
 	Index index3 = new Index();
@@ -29,7 +30,8 @@ public class Controller{
 	private int selected;
 	
 	public Controller(){
-		
+
+		//Data passed from GUI to the process
 		g.goButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				g.infoField.setText("");
@@ -37,12 +39,18 @@ public class Controller{
 					// 1 Worksheet
 					input.add(g.inputField1.getText());
 					indexArray.add(index1);
+					if(panIndex == true) {
+						input.add(g.inputField5.getText());
+					}
 				}else if(selected == 2){
 					// 2 Worksheets
 					input.add(g.inputField1.getText());
 					input.add(g.inputField2.getText());
 					indexArray.add(index1);
 					indexArray.add(index2);
+					if(panIndex == true) {
+						input.add(g.inputField5.getText());
+					}
 				}else if(selected == 3){
 					// 3 Worksheets
 					input.add(g.inputField1.getText());
@@ -51,6 +59,9 @@ public class Controller{
 					indexArray.add(index1);
 					indexArray.add(index2);
 					indexArray.add(index3);
+					if(panIndex == true) {
+						input.add(g.inputField5.getText());
+					}
 				}else if(selected == 4){
 					// 4 Worksheets
 					input.add(g.inputField1.getText());
@@ -61,10 +72,13 @@ public class Controller{
 					indexArray.add(index2);
 					indexArray.add(index3);
 					indexArray.add(index4);
+					if(panIndex == true) {
+						input.add(g.inputField5.getText());
+					}
 				}
 				ImportWorksheet worksheet = new ImportWorksheet();
 				try {
-					worksheet.process(input, indexArray, combine);
+					worksheet.process(input, indexArray, combine, panIndex);
 				} catch (Throwable e1) {
 					g.infoField.setText(e1.toString().substring(21));
 				}
@@ -197,6 +211,37 @@ public class Controller{
 						g.worksheetLabel.setForeground(Color.GREEN);
 						g.combineYes.setSelected(false);
 						combine = false;
+					}
+				} catch (Exception localException) {
+				}
+			}
+		});
+
+		//**************** PAN CANCER INDEX OPTIONS ****************
+		g.panYes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if(g.panYes.isSelected()){
+						g.worksheetLabel.setText("Adding Pan cancer indexes");
+						g.worksheetLabel.setForeground(Color.GREEN);
+						g.panNo.setSelected(false);
+						g.inputField5.setVisible(true);
+						panIndex = true;
+					}
+				} catch (Exception localException) {
+				}
+			}
+		});
+
+		g.panNo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if(g.panNo.isSelected()){
+						g.worksheetLabel.setText("Not adding Pan cancer indexes");
+						g.worksheetLabel.setForeground(Color.RED);
+						g.panYes.setSelected(false);
+						g.inputField5.setVisible(false);
+						panIndex = false;
 					}
 				} catch (Exception localException) {
 				}

@@ -5,8 +5,8 @@ package nhs.cardiff.genetics.ngssamplesheets;
 
 /**
  * @author Rhys Cooper & Sara Rey
- * @Date 17/04/2019
- * @version 1.4.4
+ * @Date 13/06/2019
+ * @version 1.4.5
  * 
  */
 
@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.List;
 
 public class ImportWorksheet {
 	private ArrayList<Worksheet> worksheets = new ArrayList<Worksheet>();
@@ -25,12 +26,14 @@ public class ImportWorksheet {
 	private String url;
 	private String user;
 	private String test;
+	private boolean goPan;
 	private boolean go;
 	private boolean goNGS;
 
 	public ImportWorksheet() {
 		go = false;
 		goNGS = false;
+		goPan = false;
 		db = "M:\\Pyrosequencing\\Pyrosequencing Service\\PCR & PYRO spreadsheets\\Log\\IT\\SHIRE COPY FOR PYRO.MDB";
 		url = ("jdbc:odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=" + db);
 	}
@@ -42,16 +45,26 @@ public class ImportWorksheet {
 	 * @param combine Boolean, true if user wishes to combine worksheets into one output file
 	 * @throws Exception Throws exception if the input string is not a valid shire or NGS worksheet
 	 */
-	public void process(ArrayList<String> input, ArrayList<Index> index, Boolean combine) throws Exception{
+	public void process(ArrayList<String> input, ArrayList<Index> index, Boolean combine, Boolean pan) throws Exception{
 		ExportSampleSheet export = new ExportSampleSheet();
 		// reduce input down to amount of worksheets selected
 		// don't need this null removal? Test...
 		input.remove(null);
-		for (int i = 0; i < input.size(); i++) {
+
+		//Support where one additional input is appended to end of input array for pan cancer index option
+		int inputEnd = input.size();
+		String indexStart = "no index";
+		if (pan) {
+			inputEnd = input.size() - 1;
+			indexStart = input.get(input.size() - 1);
+
+		}
+
+		for (int i = 0; i < inputEnd; i++) {
 			Worksheet ws = new Worksheet();
-			importShire(ws, input.get(i).toString());
+			importShire(ws, input.get(i).toString(), indexStart);
 			worksheets.add(ws);
-		}	
+		}
 		if(combine == true){			
 			combine(worksheets, index);		
 		}else if(combine == false){	
@@ -90,9 +103,20 @@ public class ImportWorksheet {
 	 * @param input The input string provided by the user
 	 * @throws Exception Throws exception if the input string is not a valid shire or NGS worksheet
 	 */
-	private void importShire(Worksheet ws, String input) throws Exception{
-		
+	private void importShire(Worksheet ws, String input, String panInd) throws Exception{
+
 		user = System.getProperty("user.name");
+
+		//Allow worksheets with no pan index through
+		if (!panInd.equals("no index")){
+			//If there is an entry, check it
+			goPan = checkInputPanIndex(panInd);
+			if (!goPan){
+				Exception ex = new Exception("Not a Valid index, please try again");
+				throw ex;
+			}
+		}
+
 		go = checkInputShire(input);
 		User getUser = new User(user);
 		boolean done = false;
@@ -131,6 +155,9 @@ public class ImportWorksheet {
 
 
 			ResultSet rs = st.executeQuery();
+
+			int offset = 0;
+
 			while (rs.next()) {
 				ws.setWorksheet(rs.getString("WORKSHEET").toString());
 				String spaceFix = rs.getString("LABNO");
@@ -148,6 +175,33 @@ public class ImportWorksheet {
 				ws.setUpdateDate(rs.getString("UPDATEDDATE").substring(2, 10).replace("-", "/"));
 				ws.setSexes(rs.getString("SEX"));
 				ws.setGenes(rs.getString("REASON_FOR_REFERRAL"));
+
+
+				//If pancancer (front end selection) add indices to ws object in order
+				//Only add indexes where there is an associated lab number
+				if (goPan && spaceFix != null) {
+					PanIndexes pi = new PanIndexes();
+					pi.setStartingIndex(panInd);
+					List<String> listKeys = new ArrayList<String>(pi.getPanIndices().keySet());
+					//System.out.println(listKeys);
+					//Get the position of the index
+					int keyIndex = listKeys.indexOf(panInd);
+					int currentIndex = (keyIndex + offset);
+					String currentKey = (listKeys.get(currentIndex));
+					ws.setPanIndexId(currentKey);
+
+					//Get values from key
+					List<String> panIndices = pi.getPanIndices().get(currentKey);
+					ws.setPanFirstIndex(panIndices.get(0));
+					ws.setPanSecondIndex(panIndices.get(1));
+
+					//Handle where indexes start again at A1
+					if (currentIndex < listKeys.size()-1) {
+						offset = (offset + 1);
+					} else{
+						offset = -(keyIndex);
+					}
+				}
 		
 				// Check if NGS worksheet
 				// Gets size - 1 to pick to the last entry
@@ -203,20 +257,36 @@ public class ImportWorksheet {
 	}
 
 	/**
+	 *
+	 * @param indexInput The input from the user
+	 * @return true if input valid index
+	 */
+	private boolean checkInputPanIndex(String indexInput) {
+		String filter = "((^[A-H]0?[1-9]$)|(^[A-H]1[0-2]$))";
+		Pattern pattern = Pattern.compile(filter, 2);
+		Matcher matcher = pattern.matcher(indexInput);
+
+		if (matcher.find()) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * 
-	 * @param arrayList denoting the name of the test
+	 * @param test denoting the name of the test
 	 * @return true if test a valid NGS test
 	 */
 	private boolean checkInputNGS(String test) {
-		if ((test.equals("NEXTERA NGS"))
-				|| (test.equals("TruSight Cancer"))
-				|| (test.equals("TruSight One CES panel"))
-				|| (test.equals("TAM panel"))
-				|| (test.equals("CRM panel"))
-				|| (test.equals("BRCA panel"))
-				|| (test.equals("GeneRead pooled"))
-				|| (test.equals("haem NGS"))
-		        || (test.equals("PanCancerNGS panel"))) {
+		if ((test.equalsIgnoreCase("NEXTERA NGS"))
+				|| (test.equalsIgnoreCase("TruSight Cancer"))
+				|| (test.equalsIgnoreCase("TruSight One CES panel"))
+				|| (test.equalsIgnoreCase("TAM panel"))
+				|| (test.equalsIgnoreCase("CRM panel"))
+				|| (test.equalsIgnoreCase("BRCA panel"))
+				|| (test.equalsIgnoreCase("GeneRead pooled"))
+				|| (test.equalsIgnoreCase("haem NGS"))
+		        || (test.equalsIgnoreCase("PanCancerNGS panel"))) {
 			goNGS = true;
 		} else {
 			goNGS = false;

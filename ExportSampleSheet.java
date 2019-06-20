@@ -5,8 +5,8 @@ package nhs.cardiff.genetics.ngssamplesheets;
 
 /**
  * @author Rhys Cooper & Sara Rey
- * @Date 17/04/2019
- * @version 1.4.4
+ * @Date 13/06/2019
+ * @version 1.4.5
  * 
  */
 import java.lang.*;
@@ -426,6 +426,19 @@ public class ExportSampleSheet {
 				cell.setCellValue(ws.getLabNo().get(i));
 				cell = row.createCell(1);
 				cell.setCellValue(ws.getWorksheet().get(i));
+
+				if (!ws.getPanFirstIndex().isEmpty() && !ws.getPanSecondIndex().isEmpty()) {
+					//Write out indexes to sample sheet
+					cell = row.createCell(3);
+					cell.setCellValue(ws.getPanIndexId().get(i)); //pan index name
+					cell = row.createCell(4);
+					cell.setCellValue(ws.getPanFirstIndex().get(i)); //first pan index
+					cell = row.createCell(5);
+					cell.setCellValue(ws.getPanIndexId().get(i)); //pan index name
+					cell = row.createCell(6);
+					cell.setCellValue(ws.getPanSecondIndex().get(i)); //second pan index
+				}
+
 				cell = row.createCell(8);
 
 				String sex;
@@ -444,6 +457,7 @@ public class ExportSampleSheet {
 				}
 
 				cell.setCellValue(panCancerPipeline + ";referral=" + ws.getGenes().get(i) + ";sex=" + sex);
+
 			}
 
 			rowNum += 1;

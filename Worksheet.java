@@ -1,5 +1,12 @@
 package nhs.cardiff.genetics.ngssamplesheets;
 
+/**
+ * @author Rhys Cooper & Sara Rey
+ * @Date 13/06/2019
+ * @version 1.4.5
+ *
+ */
+
 import java.util.ArrayList;
 
 public class Worksheet {
@@ -14,6 +21,9 @@ public class Worksheet {
 	private ArrayList<String> comments;
 	private ArrayList<String> sexes;
 	private ArrayList<String> genes;
+	private ArrayList<String> index;
+	private ArrayList<String> first;
+	private ArrayList<String> second;
 	
 	public Worksheet(){
 		this.worksheet = new ArrayList<String>();
@@ -26,6 +36,9 @@ public class Worksheet {
 		this.comments = new ArrayList<String>();
 		this.sexes = new ArrayList<String>();
 		this.genes = new ArrayList<String>();
+		this.index = new ArrayList<String>();
+		this.first = new ArrayList<String>();
+		this.second = new ArrayList<String>();
 	}
 
 	/**
@@ -183,4 +196,46 @@ public class Worksheet {
 	public void setGenes(String genes) {
 		this.genes.add(genes);
 	}
+
+	/**
+	 *
+	 * @return Returns index, The index name/identifier for pan cancer samples.
+	 */
+	public ArrayList<String> getPanIndexId() { return index; }
+
+	/**
+	 *
+	 * @param index The index name/identifier for pan cancer samples.
+	 */
+	public void setPanIndexId(String index) {
+		this.index.add(index);
+	}
+
+    /**
+     *
+     * @return Returns first, The first index for pan cancer samples.
+     */
+    public ArrayList<String> getPanFirstIndex() { return first; }
+
+    /**
+     *
+     * @param first The first index for pan cancer samples.
+     */
+    public void setPanFirstIndex(String first) {
+        this.first.add(first);
+    }
+
+    /**
+     *
+     * @return Returns second, The second index for pan cancer samples (reverse complement).
+     */
+    public ArrayList<String> getPanSecondIndex() { return second; }
+
+    /**
+     *
+     * @param second The second index for pan cancer samples (reverse complement).
+     */
+    public void setPanSecondIndex(String second) {
+        this.second.add(second);
+    }
 }
