@@ -5,8 +5,8 @@ package nhs.cardiff.genetics.ngssamplesheets;
 
 /**
  * @author Rhys Cooper & Sara Rey
- * @Date 13/06/2019
- * @version 1.4.5
+ * @Date 04/07/2019
+ * @version 1.4.6
  * 
  */
 import java.lang.*;
@@ -236,7 +236,7 @@ public class ExportSampleSheet {
 					// SPECIFIC TO TAM
 					cell.setCellValue(ws.getWorksheet().get(i));
 					cell = row.createCell(6);
-					cell.setCellValue(tamPipeline);
+					cell.setCellValue(tamPipeline  + ";referral=" + ws.getGenes().get(i));
 
 				}else if(select.equalsIgnoreCase("MYELOID")){
 					// SPECIFIC TO Myeloid
@@ -369,13 +369,13 @@ public class ExportSampleSheet {
 				cell.setCellValue(ws.getWorksheet().get(i));
 				if(ws.getLabNo().get(i).equalsIgnoreCase("NTC-WCB")){
 					cell = row.createCell(6);
-					cell.setCellValue(wcbPipeline);
+					cell.setCellValue(wcbPipeline  + ";referral=" + ws.getGenes().get(i));
 				}else if(ws.getLabNo().get(i).equalsIgnoreCase("NTC-FOCUS4") || ws.getLabNo().get(i).equalsIgnoreCase("NTC-GIST")){
 					cell = row.createCell(6);
-					cell.setCellValue(focus4Pipeline);
+					cell.setCellValue(focus4Pipeline  + ";referral=" + ws.getGenes().get(i));
 				}else if(ws.getLabNo().get(i).equalsIgnoreCase("NTC-BRCA")){
 					cell = row.createCell(6);
-					cell.setCellValue(brcaPipeline);
+					cell.setCellValue(brcaPipeline  + ";referral=" + ws.getGenes().get(i));
 				}
 			}
 			rowNum += 1;
@@ -394,11 +394,11 @@ public class ExportSampleSheet {
 			}else if(ws.getComments().get(i).equalsIgnoreCase("FOCUS4")
 					|| ws.getComments().get(i).equalsIgnoreCase("FOCUS 4")
 					|| ws.getComments().get(i).equalsIgnoreCase("GIST")){
-				cell.setCellValue(focus4Pipeline);
+				cell.setCellValue(focus4Pipeline + ";referral=" + ws.getGenes().get(i));
 			}else if(ws.getComments().get(i).equalsIgnoreCase("WCB")){
-				cell.setCellValue(wcbPipeline);
+				cell.setCellValue(wcbPipeline + ";referral=" + ws.getGenes().get(i));
 			}else if(ws.getComments().get(i).equalsIgnoreCase("BRCA")){
-				cell.setCellValue(brcaPipeline);
+				cell.setCellValue(brcaPipeline + ";referral=" + ws.getGenes().get(i));
 			}
 			rowNum += 1;
 		}
@@ -523,16 +523,16 @@ public class ExportSampleSheet {
 					cell.setCellValue(ws.getWorksheet().get(i));
 					if(ws.getLabNo().get(i).equalsIgnoreCase("NTC-WCB")){
 						cell = row.createCell(6);
-						cell.setCellValue(wcbPipeline);
+						cell.setCellValue(wcbPipeline  + ";referral=" + ws.getGenes().get(i));
 					}else if(ws.getLabNo().get(i).equalsIgnoreCase("NTC-FOCUS4") || ws.getLabNo().get(i).equalsIgnoreCase("NTC-GIST")){
 						cell = row.createCell(6);
-						cell.setCellValue(focus4Pipeline);
+						cell.setCellValue(focus4Pipeline  + ";referral=" + ws.getGenes().get(i));
 					}else if(ws.getLabNo().get(i).equalsIgnoreCase("NTC-BRCA")){
 						cell = row.createCell(6);
-						cell.setCellValue(brcaPipeline);
+						cell.setCellValue(brcaPipeline  + ";referral=" + ws.getGenes().get(i));
 					}else if(ws.getLabNo().get(i).equalsIgnoreCase("NTC-TAM")){
 						cell = row.createCell(6);
-						cell.setCellValue(tamPipeline);
+						cell.setCellValue(tamPipeline  + ";referral=" + ws.getGenes().get(i));
 					}
 					amount++;
 				}
@@ -552,13 +552,13 @@ public class ExportSampleSheet {
 				}else if(ws.getComments().get(i).equalsIgnoreCase("FOCUS4")
 						|| ws.getComments().get(i).equalsIgnoreCase("FOCUS 4")
 						|| ws.getComments().get(i).equalsIgnoreCase("GIST")){
-					cell.setCellValue(focus4Pipeline);
+					cell.setCellValue(focus4Pipeline  + ";referral=" + ws.getGenes().get(i));
 				}else if(ws.getComments().get(i).equalsIgnoreCase("WCB")){
-					cell.setCellValue(wcbPipeline);
+					cell.setCellValue(wcbPipeline  + ";referral=" + ws.getGenes().get(i));
 				}else if(ws.getComments().get(i).equalsIgnoreCase("BRCA")){
-					cell.setCellValue(brcaPipeline);
+					cell.setCellValue(brcaPipeline  + ";referral=" + ws.getGenes().get(i));
 				}else if(ws.getComments().get(i).equalsIgnoreCase("TAM")){
-					cell.setCellValue(tamPipeline);
+					cell.setCellValue(tamPipeline  + ";referral=" + ws.getGenes().get(i));
 				}
 				rowNum += 1;
 			}
