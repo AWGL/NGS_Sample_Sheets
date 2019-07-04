@@ -8,7 +8,7 @@ import javax.swing.JMenuItem;
 /**
  * @author Rhys Cooper and Sara Rey
  * @Date 13/06/2019
- * @version 1.4.5
+ * @version 1.4.6
  * 
  */
 public class Menu {
