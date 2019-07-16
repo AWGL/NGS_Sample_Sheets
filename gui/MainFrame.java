@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 /**
  * @author Rhys Cooper
  * @Date 17/02/2017
- * @version 1.4.6
+ * @version 1.4.7
  * 
  */
 public class MainFrame extends JFrame {
