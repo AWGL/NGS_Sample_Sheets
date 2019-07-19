@@ -5,8 +5,8 @@ package nhs.cardiff.genetics.ngssamplesheets;
 
 /**
  * @author Rhys Cooper & Sara Rey
- * @Date 04/07/2019
- * @version 1.4.6
+ * @Date 16/07/2019
+ * @version 1.4.7
  * 
  */
 import java.lang.*;
@@ -367,37 +367,57 @@ public class ExportSampleSheet {
 				cell.setCellValue(ws.getLabNo().get(i));
 				cell = row.createCell(1);
 				cell.setCellValue(ws.getWorksheet().get(i));
-				if(ws.getLabNo().get(i).equalsIgnoreCase("NTC-WCB")){
+
+				// Write out pipelines for NTCs
+				if(ws.getLabNo().get(i).matches("(?i:.*NTC.*WCB.*)")){ //.equalsIgnoreCase("NTC-WCB")){
 					cell = row.createCell(6);
 					cell.setCellValue(wcbPipeline  + ";referral=" + ws.getGenes().get(i));
-				}else if(ws.getLabNo().get(i).equalsIgnoreCase("NTC-FOCUS4") || ws.getLabNo().get(i).equalsIgnoreCase("NTC-GIST")){
+				}else if(ws.getLabNo().get(i).matches("(?i:.*NTC.*FOCUS4.*)") || ws.getLabNo().get(i).matches("(?i:.*NTC.*GIST.*)")){ //.equalsIgnoreCase("NTC-GIST")){
 					cell = row.createCell(6);
 					cell.setCellValue(focus4Pipeline  + ";referral=" + ws.getGenes().get(i));
-				}else if(ws.getLabNo().get(i).equalsIgnoreCase("NTC-BRCA")){
+				}else if(ws.getLabNo().get(i).matches("(?i:.*NTC.*BRCA.*)")){ //.equalsIgnoreCase("NTC-BRCA")){
 					cell = row.createCell(6);
 					cell.setCellValue(brcaPipeline  + ";referral=" + ws.getGenes().get(i));
+				}else if(ws.getLabNo().get(i).matches("(?i:.*NTC.*CRM.*)")){ //.equalsIgnoreCase("NTC-BRCA")){
+					cell = row.createCell(6);
+					cell.setCellValue(focus4Pipeline  + ";referral=" + ws.getGenes().get(i));
 				}
 			}
 			rowNum += 1;
 		}
 		
-		rowNum = 14;
+		rowNum = wcbRow;
+		// Write out pipeline into description field for samples
 		for (int i = 0; i < ws.getComments().size(); i++) {
 			row = worksheet.getRow(rowNum);
 			cell = row.createCell(6);
-			if (ws.getComments().get(i) == null){
+			if (ws.getComments().get(i) == null) {
+				//Comments are null for pan referrals
+				//Note that equalsIgnoreCase is not null safe and if ws.getGenes().get(i) is null this will throw an exception
+				if (ws.getGenes().get(i).equalsIgnoreCase("Breast")
+						|| ws.getGenes().get(i).equalsIgnoreCase("Colorectal")
+						|| ws.getGenes().get(i).equalsIgnoreCase("GIST")
+						|| ws.getGenes().get(i).equalsIgnoreCase("Glioma")
+						|| ws.getGenes().get(i).equalsIgnoreCase("HeadAndNeck")
+						|| ws.getGenes().get(i).equalsIgnoreCase("Lung")
+						|| ws.getGenes().get(i).equalsIgnoreCase("Melanoma")
+						|| ws.getGenes().get(i).equalsIgnoreCase("Ovarian")
+						|| ws.getGenes().get(i).equalsIgnoreCase("Prostate")
+						|| ws.getGenes().get(i).equalsIgnoreCase("Thyroid")
+						|| ws.getGenes().get(i).equalsIgnoreCase("Tumour")){
+					cell.setCellValue(focus4Pipeline + ";referral=" + ws.getGenes().get(i));
+				}
 				// Removed as per request from Hood 08/01/2017
 				// Rhys could you please amend the macro so that if a sample has nothing in the 'comments' box - no analysis pipeline is assigned to it.
-				// This would make it easier for something reviewing the samplesheet to spot that something is missing in SHIRE. 
-				
+				// This would make it easier for something reviewing the samplesheet to spot that something is missing in SHIRE.
 				//cell.setCellValue(focus4Pipeline);
-			}else if(ws.getComments().get(i).equalsIgnoreCase("FOCUS4")
+			}else if (ws.getComments().get(i).equalsIgnoreCase("FOCUS4")
 					|| ws.getComments().get(i).equalsIgnoreCase("FOCUS 4")
 					|| ws.getComments().get(i).equalsIgnoreCase("GIST")){
 				cell.setCellValue(focus4Pipeline + ";referral=" + ws.getGenes().get(i));
-			}else if(ws.getComments().get(i).equalsIgnoreCase("WCB")){
+			} else if (ws.getComments().get(i).equalsIgnoreCase("WCB")) {
 				cell.setCellValue(wcbPipeline + ";referral=" + ws.getGenes().get(i));
-			}else if(ws.getComments().get(i).equalsIgnoreCase("BRCA")){
+			} else if (ws.getComments().get(i).equalsIgnoreCase("BRCA")){
 				cell.setCellValue(brcaPipeline + ";referral=" + ws.getGenes().get(i));
 			}
 			rowNum += 1;
@@ -521,18 +541,21 @@ public class ExportSampleSheet {
 					cell.setCellValue(ws.getLabNo().get(i));
 					cell = row.createCell(1);
 					cell.setCellValue(ws.getWorksheet().get(i));
-					if(ws.getLabNo().get(i).equalsIgnoreCase("NTC-WCB")){
+					if(ws.getLabNo().get(i).matches("(?i:.*NTC.*WCB.*)")){ //.equalsIgnoreCase("NTC-WCB")){
 						cell = row.createCell(6);
 						cell.setCellValue(wcbPipeline  + ";referral=" + ws.getGenes().get(i));
-					}else if(ws.getLabNo().get(i).equalsIgnoreCase("NTC-FOCUS4") || ws.getLabNo().get(i).equalsIgnoreCase("NTC-GIST")){
+					}else if(ws.getLabNo().get(i).matches("(?i:.*NTC.*FOCUS4.*)") || ws.getLabNo().get(i).matches("(?i:.*NTC.*GIST.*)")){ //.equalsIgnoreCase("NTC-GIST")){
 						cell = row.createCell(6);
 						cell.setCellValue(focus4Pipeline  + ";referral=" + ws.getGenes().get(i));
-					}else if(ws.getLabNo().get(i).equalsIgnoreCase("NTC-BRCA")){
+					}else if(ws.getLabNo().get(i).matches("(?i:.*NTC.*BRCA.*)")){ //equalsIgnoreCase("NTC-BRCA")){
 						cell = row.createCell(6);
 						cell.setCellValue(brcaPipeline  + ";referral=" + ws.getGenes().get(i));
-					}else if(ws.getLabNo().get(i).equalsIgnoreCase("NTC-TAM")){
+					}else if(ws.getLabNo().get(i).matches("(?i:.*NTC.*TAM.*)")){ //.equalsIgnoreCase("NTC-TAM")){
 						cell = row.createCell(6);
-						cell.setCellValue(tamPipeline  + ";referral=" + ws.getGenes().get(i));
+						cell.setCellValue(tamPipeline + ";referral=" + ws.getGenes().get(i));
+					}else if(ws.getLabNo().get(i).matches("(?i:.*NTC.*CRM.*)")){ //.equalsIgnoreCase("NTC-BRCA")){
+						cell = row.createCell(6);
+						cell.setCellValue(focus4Pipeline + ";referral=" + ws.getGenes().get(i));
 					}
 					amount++;
 				}
@@ -543,22 +566,38 @@ public class ExportSampleSheet {
 			for (int i = 0; i < ws.getComments().size(); i++) {
 				row = worksheet.getRow(rowNum);
 				cell = row.createCell(6);
-				if (ws.getComments().get(i) == null){
+				if (ws.getComments().get(i) == null) {
+					//Comments are null for pan referrals
+					//Note that equalsIgnoreCase is not null safe and if ws.getGenes().get(i) is null this will throw an exception
+					if (ws.getGenes().get(i).equalsIgnoreCase("Breast")
+							|| ws.getGenes().get(i).equalsIgnoreCase("Colorectal")
+							|| ws.getGenes().get(i).equalsIgnoreCase("GIST")
+							|| ws.getGenes().get(i).equalsIgnoreCase("Glioma")
+							|| ws.getGenes().get(i).equalsIgnoreCase("HeadAndNeck")
+							|| ws.getGenes().get(i).equalsIgnoreCase("Lung")
+							|| ws.getGenes().get(i).equalsIgnoreCase("Melanoma")
+							|| ws.getGenes().get(i).equalsIgnoreCase("Ovarian")
+							|| ws.getGenes().get(i).equalsIgnoreCase("Prostate")
+							|| ws.getGenes().get(i).equalsIgnoreCase("Thyroid")
+							|| ws.getGenes().get(i).equalsIgnoreCase("Tumour")){
+						cell.setCellValue(focus4Pipeline + ";referral=" + ws.getGenes().get(i));
+					}
 					// Removed as per request from Hood 08/01/2017
 					// Rhys could you please amend the macro so that if a sample has nothing in the 'comments' box - no analysis pipeline is assigned to it.
-					// This would make it easier for something reviewing the samplesheet to spot that something is missing in SHIRE. 
-					
+					// This would make it easier for something reviewing the samplesheet to spot that something is missing in SHIRE.
 					//cell.setCellValue(focus4Pipeline);
-				}else if(ws.getComments().get(i).equalsIgnoreCase("FOCUS4")
+				} else if (ws.getComments().get(i).equalsIgnoreCase("FOCUS4")
 						|| ws.getComments().get(i).equalsIgnoreCase("FOCUS 4")
 						|| ws.getComments().get(i).equalsIgnoreCase("GIST")){
-					cell.setCellValue(focus4Pipeline  + ";referral=" + ws.getGenes().get(i));
-				}else if(ws.getComments().get(i).equalsIgnoreCase("WCB")){
-					cell.setCellValue(wcbPipeline  + ";referral=" + ws.getGenes().get(i));
-				}else if(ws.getComments().get(i).equalsIgnoreCase("BRCA")){
-					cell.setCellValue(brcaPipeline  + ";referral=" + ws.getGenes().get(i));
-				}else if(ws.getComments().get(i).equalsIgnoreCase("TAM")){
-					cell.setCellValue(tamPipeline  + ";referral=" + ws.getGenes().get(i));
+					cell.setCellValue(focus4Pipeline + ";referral=" + ws.getGenes().get(i));
+				} else if (ws.getComments().get(i).equalsIgnoreCase("WCB")) {
+					cell.setCellValue(wcbPipeline + ";referral=" + ws.getGenes().get(i));
+				} else if (ws.getComments().get(i).equalsIgnoreCase("BRCA")){
+					cell.setCellValue(brcaPipeline + ";referral=" + ws.getGenes().get(i));
+				} else if (ws.getComments().get(i).equalsIgnoreCase("TAM")){
+					cell.setCellValue(tamPipeline + ";referral=" + ws.getGenes().get(i));
+				} else if (ws.getPanel().get(i).equals("PanCancerNGS panel")){
+					cell.setCellValue(focus4Pipeline + ";referral=" + ws.getGenes().get(i));
 				}
 				rowNum += 1;
 			}

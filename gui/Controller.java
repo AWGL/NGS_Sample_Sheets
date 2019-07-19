@@ -13,7 +13,7 @@ import nhs.cardiff.genetics.ngssamplesheets.Index;
 /**
  * @author Rhys Cooper and Sara Rey
  * @Date 13/06/2019
- * @version 1.4.6
+ * @version 1.4.7
  * 
  */
 public class Controller{
