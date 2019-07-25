@@ -36,6 +36,7 @@ public class ExportSampleSheet {
 	private String crukPipeline;
 	private String myeloidPipeline;
 	private String panCancerPipeline;
+	private String pancrmPipeline;
 	private int crukRow;
 	//private int crukAnRow;
 	private int truRow;
@@ -118,6 +119,7 @@ public class ExportSampleSheet {
 		  crukPipeline = properties.getProperty("CRUK");
 		  myeloidPipeline = properties.getProperty("MYELOID");
 		  panCancerPipeline = properties.getProperty("PANCANCER");
+		  pancrmPipeline = properties.getProperty("PANCRM");
 
 		} catch (IOException e) {
 			
@@ -380,7 +382,7 @@ public class ExportSampleSheet {
 					cell.setCellValue(brcaPipeline  + ";referral=" + ws.getGenes().get(i));
 				}else if(ws.getLabNo().get(i).matches("(?i:.*NTC.*CRM.*)")){ //.equalsIgnoreCase("NTC-BRCA")){
 					cell = row.createCell(6);
-					cell.setCellValue(focus4Pipeline  + ";referral=" + ws.getGenes().get(i));
+					cell.setCellValue(pancrmPipeline  + ";referral=" + ws.getGenes().get(i));
 				}
 			}
 			rowNum += 1;
@@ -405,7 +407,7 @@ public class ExportSampleSheet {
 						|| ws.getGenes().get(i).equalsIgnoreCase("Prostate")
 						|| ws.getGenes().get(i).equalsIgnoreCase("Thyroid")
 						|| ws.getGenes().get(i).equalsIgnoreCase("Tumour")){
-					cell.setCellValue(focus4Pipeline + ";referral=" + ws.getGenes().get(i));
+					cell.setCellValue(pancrmPipeline + ";referral=" + ws.getGenes().get(i));
 				}
 				// Removed as per request from Hood 08/01/2017
 				// Rhys could you please amend the macro so that if a sample has nothing in the 'comments' box - no analysis pipeline is assigned to it.
@@ -580,7 +582,7 @@ public class ExportSampleSheet {
 							|| ws.getGenes().get(i).equalsIgnoreCase("Prostate")
 							|| ws.getGenes().get(i).equalsIgnoreCase("Thyroid")
 							|| ws.getGenes().get(i).equalsIgnoreCase("Tumour")){
-						cell.setCellValue(focus4Pipeline + ";referral=" + ws.getGenes().get(i));
+						cell.setCellValue(pancrmPipeline + ";referral=" + ws.getGenes().get(i));
 					}
 					// Removed as per request from Hood 08/01/2017
 					// Rhys could you please amend the macro so that if a sample has nothing in the 'comments' box - no analysis pipeline is assigned to it.
@@ -597,7 +599,7 @@ public class ExportSampleSheet {
 				} else if (ws.getComments().get(i).equalsIgnoreCase("TAM")){
 					cell.setCellValue(tamPipeline + ";referral=" + ws.getGenes().get(i));
 				} else if (ws.getPanel().get(i).equals("PanCancerNGS panel")){
-					cell.setCellValue(focus4Pipeline + ";referral=" + ws.getGenes().get(i));
+					cell.setCellValue(pancrmPipeline + ";referral=" + ws.getGenes().get(i));
 				}
 				rowNum += 1;
 			}
