@@ -19,8 +19,8 @@ import javax.swing.JTextField;
 
 /**
  * @author Rhys Cooper & Sara Rey
- * @Date 13/06/2019
- * @version 1.4.7
+ * @Date 12/08/2019
+ * @version 1.4.8
  * 
  */
 public class Gui extends Menu {
@@ -47,7 +47,7 @@ public class Gui extends Menu {
 		
 		//**************** FRAME ****************
 		// CREATE FRAME
-		JFrame frame = new JFrame("NGS Sample Sheet Generator - Version 1.4.7");
+		JFrame frame = new JFrame("NGS Sample Sheet Generator - Version 1.4.8");
 		frame.setJMenuBar(menuBar);
 		// Add mainpanel which contains all subpanels
 		frame.add(mainPanel());
