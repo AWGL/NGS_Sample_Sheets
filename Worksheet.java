@@ -2,8 +2,8 @@ package nhs.cardiff.genetics.ngssamplesheets;
 
 /**
  * @author Rhys Cooper & Sara Rey
- * @Date 13/06/2019
- * @version 1.4.7
+ * @Date 12/08/2019
+ * @version 1.4.8
  *
  */
 
@@ -150,7 +150,7 @@ public class Worksheet {
 	 * @param panel The panel the requested test is on
 	 */
 	public void setPanel(String panel) {
-		this.panel.add(panel);
+			this.panel.add(panel);
 	}
 
 	/**
@@ -194,7 +194,17 @@ public class Worksheet {
 	 * @param genes The genes to be analysed (TAM) or panel applied (PanCancer).
 	 */
 	public void setGenes(String genes) {
-		this.genes.add(genes);
+		//Null safe method
+		if (genes != null) {
+			if (genes.equals("FOCUS4 DNA")) {
+				this.genes.add("FOCUS4");
+			} else {
+				genes = genes.replaceAll("\\s","");
+				this.genes.add(genes);
+			}
+		}else{
+			this.genes.add(genes);
+		}
 	}
 
 	/**
