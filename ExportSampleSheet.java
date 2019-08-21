@@ -5,8 +5,8 @@ package nhs.cardiff.genetics.ngssamplesheets;
 
 /**
  * @author Rhys Cooper & Sara Rey
- * @Date 12/08/2019
- * @version 1.4.8
+ * @Date 22/08/2019
+ * @version 1.4.9
  * 
  */
 import java.lang.*;
@@ -37,6 +37,7 @@ public class ExportSampleSheet {
 	private String myeloidPipeline;
 	private String panCancerPipeline;
 	private String pancrmPipeline;
+	private String fhPipeline;
 	private int crukRow;
 	//private int crukAnRow;
 	private int truRow;
@@ -45,6 +46,7 @@ public class ExportSampleSheet {
 	private int wcbRow;
 	private int myeloidRow;
 	private int panCancerRow;
+	private int fhRow;
 
 	public ExportSampleSheet() {
 		properties();
@@ -57,6 +59,7 @@ public class ExportSampleSheet {
 		wcbRow = 14;
 		myeloidRow = 17;
 		panCancerRow = 18;
+		fhRow = 17;
 	}
 
 	/**
@@ -86,9 +89,12 @@ public class ExportSampleSheet {
 		}else if(test.equalsIgnoreCase("haem NGS")) {
 			exportCRUKTAMMye(ws, index, "MYELOID", myeloidRow, "Y:\\samplesheet-templates\\Myeloid.xls");
 		}else if(test.equalsIgnoreCase("PanCancerNGS panel")) {
-			exportPanCancer(ws, index, "PANCANCER", panCancerRow, "Y:\\samplesheet-templates\\Pancancer.xls");;
+			exportPanCancer(ws, index, "PANCANCER", panCancerRow, "Y:\\samplesheet-templates\\Pancancer.xls");
+		}else if(test.equalsIgnoreCase("FH NGS Panel v1")) {
+			exportTrusight(ws, index,"FH", fhRow, "Y:\\samplesheet-templates\\FH.xls" );
+		}
 	}
-}
+
 
 	/**
 	 * 
@@ -120,6 +126,7 @@ public class ExportSampleSheet {
 		  myeloidPipeline = properties.getProperty("MYELOID");
 		  panCancerPipeline = properties.getProperty("PANCANCER");
 		  pancrmPipeline = properties.getProperty("PANCRM");
+		  fhPipeline = properties.getProperty("FH");
 
 		} catch (IOException e) {
 			
@@ -148,6 +155,8 @@ public class ExportSampleSheet {
 			filepath = "L:\\Auto NGS Sample sheets\\Myeloid\\";
 		} else if (assay.equals("pancancer")) {
 			filepath = "L:\\Auto NGS Sample sheets\\Pancancer\\";
+		} else if (assay.equals("FamHyp")) {
+			filepath = "L:\\Auto NGS Sample sheets\\FH\\";
 		}
 		
 		if (type.equals("analysis")) {
@@ -293,6 +302,27 @@ public class ExportSampleSheet {
 				cell.setCellValue(ws.getLabNo().get(i));
 				cell = row.createCell(1);
 				cell.setCellValue(ws.getWorksheet().get(i));
+				// Write out FH index set
+				if(select.equalsIgnoreCase("FH")) {
+					//String ind = index[0];
+					//if (index.getIndexSelect().toString().equalsIgnoreCase(index.getFH1to24().toString())){
+
+					//}else if (ind.getIndexSelect().toString().equalsIgnoreCase(ind.getFH25to48().toString())){
+
+					//}
+					cell = row.createCell(3);
+					//for (Index ind : index) {
+						//if (ind.getIndexSelect().toString().equalsIgnoreCase(ind.getFH1to24().toString())) {
+							//cell.setCellValue("FH1to24");
+						//} else if (ind.getIndexSelect().toString().equalsIgnoreCase(ind.getFH25to48().toString())) {
+							//cell.setCellValue("FH25to48");
+							//cell.setCellValue("FH25to48");
+							//cell = row.createCell(4);
+							//cell.setCellValue(ind.getIndexSelect().toString());
+						//}
+					//}
+				}
+
 				cell = row.createCell(8);
 				String sex;
 
@@ -313,6 +343,8 @@ public class ExportSampleSheet {
 					cell.setCellValue(trusightPipeline + ";sex=" + sex);
 				}else if(select.equalsIgnoreCase("TRUSIGHTONE")){
 					cell.setCellValue(trusightOnePipeline + ";sex=" + sex);
+				}else if(select.equalsIgnoreCase("FH")){
+					cell.setCellValue(fhPipeline + ";sex=" + sex);
 				}
 			}
 			rowNum += 1;
@@ -322,6 +354,8 @@ public class ExportSampleSheet {
 			rowNum = truRow;
 		}else if(select.equalsIgnoreCase("TRUSIGHTONE")){
 			rowNum = truOneRow;
+		}else if (select.equalsIgnoreCase("FH")) {
+			rowNum = fhRow;
 		}
 		/*
 		for (int i = 0; i < ws.getComments().size(); i++) {
@@ -337,6 +371,8 @@ public class ExportSampleSheet {
 			save(workbook, "", "Trusight");
 		}else if(select.equalsIgnoreCase("TRUSIGHTONE")){
 			save(workbook, "", "Trusightone");
+		}else if(select.equalsIgnoreCase("FH")){
+			save(workbook, "", "FamHyp");
 		}
 	}	
 

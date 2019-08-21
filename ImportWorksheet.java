@@ -5,8 +5,8 @@ package nhs.cardiff.genetics.ngssamplesheets;
 
 /**
  * @author Rhys Cooper & Sara Rey
- * @Date 13/06/2019
- * @version 1.4.8
+ * @Date 22/08/2019
+ * @version 1.4.9
  * 
  */
 
@@ -50,6 +50,8 @@ public class ImportWorksheet {
 		// reduce input down to amount of worksheets selected
 		// don't need this null removal? Test...
 		input.remove(null);
+
+		System.out.println(index); //FOR TESTING
 
 		//Support where one additional input is appended to end of input array for pan cancer index option
 		int inputEnd = input.size();
@@ -222,7 +224,8 @@ public class ImportWorksheet {
 								|| temp.equalsIgnoreCase("BRCA panel") && (done == false)
 								|| temp.equalsIgnoreCase("GeneRead pooled") && (done == false)
 								|| temp.equalsIgnoreCase("haem NGS") && (done == false)
-							    || temp.equalsIgnoreCase("PanCancerNGS panel") && (done == false)){
+							    || temp.equalsIgnoreCase("PanCancerNGS panel") && (done == false)
+								|| temp.equalsIgnoreCase("FH NGS Panel v1") && (done == false)){
 							ws.setPanel(temp);
 							ws.setComments(rs2.getString("COMMENTS"));
 							done = true;
@@ -286,7 +289,9 @@ public class ImportWorksheet {
 				|| (test.equalsIgnoreCase("BRCA panel"))
 				|| (test.equalsIgnoreCase("GeneRead pooled"))
 				|| (test.equalsIgnoreCase("haem NGS"))
-		        || (test.equalsIgnoreCase("PanCancerNGS panel"))) {
+		        || (test.equalsIgnoreCase("PanCancerNGS panel"))
+				|| (test.equalsIgnoreCase("FH NGS Panel v1"))){
+
 			goNGS = true;
 		} else {
 			goNGS = false;
