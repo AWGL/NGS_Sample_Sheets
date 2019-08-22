@@ -51,8 +51,6 @@ public class ImportWorksheet {
 		// don't need this null removal? Test...
 		input.remove(null);
 
-		System.out.println(index); //FOR TESTING
-
 		//Support where one additional input is appended to end of input array for pan cancer index option
 		int inputEnd = input.size();
 		String indexStart = "no index";

@@ -304,23 +304,14 @@ public class ExportSampleSheet {
 				cell.setCellValue(ws.getWorksheet().get(i));
 				// Write out FH index set
 				if(select.equalsIgnoreCase("FH")) {
-					//String ind = index[0];
-					//if (index.getIndexSelect().toString().equalsIgnoreCase(index.getFH1to24().toString())){
-
-					//}else if (ind.getIndexSelect().toString().equalsIgnoreCase(ind.getFH25to48().toString())){
-
-					//}
+					FHIndexes fhi = new FHIndexes();
+					int fhind = index.get(0).getFH1to24() + i;
+					String fhIndNum = Integer.toString(fhind);
 					cell = row.createCell(3);
-					//for (Index ind : index) {
-						//if (ind.getIndexSelect().toString().equalsIgnoreCase(ind.getFH1to24().toString())) {
-							//cell.setCellValue("FH1to24");
-						//} else if (ind.getIndexSelect().toString().equalsIgnoreCase(ind.getFH25to48().toString())) {
-							//cell.setCellValue("FH25to48");
-							//cell.setCellValue("FH25to48");
-							//cell = row.createCell(4);
-							//cell.setCellValue(ind.getIndexSelect().toString());
-						//}
-					//}
+					cell.setCellValue(fhIndNum);
+					String fhInd = fhi.getFhIndices().get(fhIndNum);
+					cell = row.createCell(4);
+					cell.setCellValue(fhInd);
 				}
 
 				cell = row.createCell(8);

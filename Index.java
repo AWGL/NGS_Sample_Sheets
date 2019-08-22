@@ -10,8 +10,8 @@ public class Index {
 	private String E505 = "GTAAGGAG";
 	private String E506 = "ACTGCATA";
 	private String E517 = "GCGTAAGA";
-	private int FH1to24 = 0;
-	private int FH25to48 = 24;
+	private int FH1to24 = 1;
+	private int FH25to48 = 25;
 	
 	
 	private String indexSelect;
