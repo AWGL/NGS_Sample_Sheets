@@ -309,6 +309,10 @@ public class Controller{
 			index.setIndexSelect(index.getE506());
 		}else if(indexSelect.getSelectedItem().toString().equalsIgnoreCase("E517")){
 			index.setIndexSelect(index.getE517());
-		}
+		}else if(indexSelect.getSelectedItem().toString().equalsIgnoreCase("FH1to24")){
+		index.setIndexSelect(index.getFH1to24());
+		}else if(indexSelect.getSelectedItem().toString().equalsIgnoreCase("FH25to48")){
+		index.setIndexSelect(index.getFH25to48());
+	}
 	}
 }

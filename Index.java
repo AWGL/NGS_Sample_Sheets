@@ -10,8 +10,8 @@ public class Index {
 	private String E505 = "GTAAGGAG";
 	private String E506 = "ACTGCATA";
 	private String E517 = "GCGTAAGA";
-	private int FH1to24 = 1;
-	private int FH25to48 = 25;
+	private String FH1to24 = "FH1to24";
+	private String FH25to48 = "FH25to48";
 	
 	
 	private String indexSelect;
@@ -94,17 +94,17 @@ public class Index {
 
 	/**
 	 *
-	 * @return Returns int offset for FH1to24 indexes
+	 * @return Returns FH1to24 index name
 	 */
-	public int getFH1to24() {
+	public String getFH1to24() {
 		return FH1to24;
 	}
 
 	/**
 	 *
-	 * @return Returns int offset for FH25to48 indexes
+	 * @return Returns FH25to48 index name
 	 */
-	public int getFH25to48() {
+	public String getFH25to48() {
 		return FH25to48;
 	}
 

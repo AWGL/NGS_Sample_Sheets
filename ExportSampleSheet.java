@@ -305,7 +305,15 @@ public class ExportSampleSheet {
 				// Write out FH index set
 				if(select.equalsIgnoreCase("FH")) {
 					FHIndexes fhi = new FHIndexes();
-					int fhind = index.get(0).getFH1to24() + i;
+					String selected = index.get(0).getIndexSelect();
+					int fhind = 500; // Set to high number so this will break if the correct assignment fails
+					if(selected.equals("FH1to24")) {
+						int offset = 1;
+						fhind = offset + i;
+					} else if(selected.equals("FH25to48")){
+						int offset = 25;
+						fhind = offset + i;
+					}
 					String fhIndNum = Integer.toString(fhind);
 					cell = row.createCell(3);
 					cell.setCellValue(fhIndNum);
