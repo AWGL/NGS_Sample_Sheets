@@ -69,7 +69,7 @@ public class FHIndexes {
 
     /**
      *
-     * @return Returns fhIndices all of the possible keys and indexes for the pan cancer panel
+     * @return Returns fhIndices all of the possible keys and indexes for the familial hypercholesterolaemia panel
      */
     public LinkedHashMap<String, String> getFhIndices() { return FhIndices; }
 

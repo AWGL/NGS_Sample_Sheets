@@ -5,8 +5,8 @@ package nhs.cardiff.genetics.ngssamplesheets;
 
 /**
  * @author Rhys Cooper & Sara Rey
- * @Date 22/08/2019
- * @version 1.4.9
+ * @Date 16/09/2019
+ * @version 1.5.0
  * 
  */
 
@@ -132,7 +132,8 @@ public class ImportWorksheet {
 					+ " DNA_Worksheet.UPDATEDBY,"
 					+ " DNA_WORKSHEET_DET.WORKSHEET,"
 					+ " PATIENT.SEX,"
-					+ " DNALAB.REASON_FOR_REFERRAL"
+					+ " DNALAB.REASON_FOR_REFERRAL,"
+					+ " PATIENT.FIRSTNAME"
 					+ " FROM (((DNA_Worksheet LEFT JOIN DNA_TEST"
 					+ " ON [DNA_Worksheet].TEST = [DNA_TEST].TEST)"
 					+ " INNER JOIN DNA_WORKSHEET_DET"
@@ -175,6 +176,7 @@ public class ImportWorksheet {
 				ws.setUpdateDate(rs.getString("UPDATEDDATE").substring(2, 10).replace("-", "/"));
 				ws.setSexes(rs.getString("SEX"));
 				ws.setGenes(rs.getString("REASON_FOR_REFERRAL"));
+				ws.setCRUKIdentifier(rs.getString("FIRSTNAME"));
 
 
 				//If pancancer (front end selection) add indices to ws object in order

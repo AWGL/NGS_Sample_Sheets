@@ -5,8 +5,8 @@ package nhs.cardiff.genetics.ngssamplesheets;
 
 /**
  * @author Rhys Cooper & Sara Rey
- * @Date 22/08/2019
- * @version 1.4.9
+ * @Date 16/09/2019
+ * @version 1.5.0
  * 
  */
 import java.lang.*;
@@ -195,13 +195,14 @@ public class ExportSampleSheet {
 		cell = row.createCell(1);
 		cell.setCellValue(ws.getWorksheet().get(0));
 		worksheetName = ws.getWorksheet().get(0);
-		
+
 		// SPECIFIC TO CRUK SHEETS
 		if(select.equalsIgnoreCase("CRUK") || select.equalsIgnoreCase("ANALYSIS")){
 			row = worksheet.getRow(4);
 			cell = row.createCell(1);
 			cell.setCellValue(ws.getUpdateDate().get(0));
-		}
+
+
 
 		for (int i = 0; i < ws.getLabNo().size(); i++) {
 			if(ws.getLabNo().get(i) != null){
@@ -214,10 +215,33 @@ public class ExportSampleSheet {
 					cell.setCellValue(ws.getLabNo().get(i));
 					cell = row.createCell(2);
 					cell.setCellValue(ws.getWorksheet().get(i));
-					
+
+					// Is sample DNA or RNA (for indices)
+					int dnaCount = 0;
+					int rnaCount = 0;
+
+					// Below code copied from FH for adapting
+					CRUKIndexes cruki = new CRUKIndexes();
+					String selected = index.get(0).getIndexSelect();
+					int fhind = 500; // Set to high number so this will break if the correct assignment fails
+					if(selected.equals("FH1to24")) {
+						int offset = 1;
+						fhind = offset + i;
+					} else if(selected.equals("FH25to48")){
+						int offset = 25;
+						fhind = offset + i;
+					}
+					String fhIndNum = Integer.toString(fhind);
+					cell = row.createCell(3);
+					cell.setCellValue(fhIndNum);
+					String fhInd = fhi.getFhIndices().get(fhIndNum);
+					cell = row.createCell(4);
+					cell.setCellValue(fhInd);
+				}
+
 					// DUAL INDEXES FOR CRUK
 					for (Index ind : index) {
-						 //INDEX NAME
+						//INDEX NAME
 						cell = row.createCell(6);
 						if(ind.getIndexSelect().toString().equalsIgnoreCase(ind.getE501().toString())){
 							cell.setCellValue("E501");
@@ -234,14 +258,14 @@ public class ExportSampleSheet {
 						}else if(ind.getIndexSelect().toString().equalsIgnoreCase(ind.getE517().toString())){
 							cell.setCellValue("E517");
 						}
-						 //INDEX BASES
+						//INDEX BASES
 						cell = row.createCell(7);
 						cell.setCellValue(ind.getIndexSelect().toString());
 					}
 
 					// SPECIFIC TO CRUK
 					cell = row.createCell(9);
-					cell.setCellValue(crukPipeline);
+					cell.setCellValue(crukPipeline + ";identifier=" + ws.getCRUKIdentifier().get(i));
 
 				}else if(select.equalsIgnoreCase("TAM")){
 					// SPECIFIC TO TAM
@@ -259,7 +283,7 @@ public class ExportSampleSheet {
 			}
 			rowNum += 1;
 		}
-		
+
 		if(select.equalsIgnoreCase("CRUK")){
 			save(workbook, "", "CRUK");
 		}else if(select.equalsIgnoreCase("ANALYSIS")){
@@ -271,6 +295,7 @@ public class ExportSampleSheet {
 		}
 
 	}
+
 
 	/**
 	 * 
