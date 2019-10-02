@@ -197,75 +197,76 @@ public class ExportSampleSheet {
 		worksheetName = ws.getWorksheet().get(0);
 
 		// SPECIFIC TO CRUK SHEETS
-		if(select.equalsIgnoreCase("CRUK") || select.equalsIgnoreCase("ANALYSIS")){
+		if(select.equalsIgnoreCase("CRUK") || select.equalsIgnoreCase("ANALYSIS")) {
 			row = worksheet.getRow(4);
 			cell = row.createCell(1);
 			cell.setCellValue(ws.getUpdateDate().get(0));
+		}
 
 
-
+		// Is sample DNA or RNA (for indices)- create count variables
+		int dnaCount = 0;
+		int rnaCount = 0;
 		for (int i = 0; i < ws.getLabNo().size(); i++) {
 			if(ws.getLabNo().get(i) != null){
 				row = worksheet.getRow(rowNum);
 				cell = row.createCell(0);
-				cell.setCellValue(ws.getLabNo().get(i));
+				String labNo = ws.getLabNo().get(i);
+				cell.setCellValue(labNo);
 				cell = row.createCell(1);
 				if(select.equalsIgnoreCase("CRUK") || select.equalsIgnoreCase("ANALYSIS")){
 					//SPECIFIC TO CRUK
+					//Variable to store sample type
+					String sampleT;
 					cell.setCellValue(ws.getLabNo().get(i));
 					cell = row.createCell(2);
 					cell.setCellValue(ws.getWorksheet().get(i));
-
+					System.out.println(labNo.substring(labNo.lastIndexOf('M')).charAt(1));
 					// Is sample DNA or RNA (for indices)
-					int dnaCount = 0;
-					int rnaCount = 0;
+					if(labNo.substring(labNo.lastIndexOf('M')).charAt(0) == '8'){ ; //.equals('8')) {
+						rnaCount += 1;
+						sampleT = "RNA";
+					}else{
+						dnaCount += 1;
+						sampleT = "DNA";
+					}
+
 
 					// Below code copied from FH for adapting
 					CRUKIndexes cruki = new CRUKIndexes();
 					String selected = index.get(0).getIndexSelect();
-					int fhind = 500; // Set to high number so this will break if the correct assignment fails
+					int crukind = 500; // Set to high number so this will break if the correct assignment fails
 					if(selected.equals("FH1to24")) {
 						int offset = 1;
-						fhind = offset + i;
+						crukind = offset + i;
 					} else if(selected.equals("FH25to48")){
-						int offset = 25;
-						fhind = offset + i;
+						int offset = 9;
+						crukind = offset + i;
 					}
-					String fhIndNum = Integer.toString(fhind);
+					String crukIndNum = Integer.toString(crukind);
 					cell = row.createCell(3);
-					cell.setCellValue(fhIndNum);
-					String fhInd = fhi.getFhIndices().get(fhIndNum);
+					cell.setCellValue(crukIndNum); //Set to compound index name
 					cell = row.createCell(4);
-					cell.setCellValue(fhInd);
-				}
+					cell.setCellValue(crukIndNum); //Set to i7 index name
+					String crukInd1 = cruki.getCrukIndices().get(crukIndNum).get(0); //First index
+					cell = row.createCell(5);
+					cell.setCellValue(crukInd1);
+					String crukInd2 = cruki.getCrukIndices().get(crukIndNum).get(1); //Second index
+					cell = row.createCell(6);
+					cell.setCellValue(crukIndNum); //Set to i5 index name
+					cell = row.createCell(7);
+					cell.setCellValue(crukInd2);
 
-					// DUAL INDEXES FOR CRUK
-					for (Index ind : index) {
-						//INDEX NAME
-						cell = row.createCell(6);
-						if(ind.getIndexSelect().toString().equalsIgnoreCase(ind.getE501().toString())){
-							cell.setCellValue("E501");
-						}else if(ind.getIndexSelect().toString().equalsIgnoreCase(ind.getE502().toString())){
-							cell.setCellValue("E502");
-						}else if(ind.getIndexSelect().toString().equalsIgnoreCase(ind.getE503().toString())){
-							cell.setCellValue("E503");
-						}else if(ind.getIndexSelect().toString().equalsIgnoreCase(ind.getE504().toString())){
-							cell.setCellValue("E504");
-						}else if(ind.getIndexSelect().toString().equalsIgnoreCase(ind.getE505().toString())){
-							cell.setCellValue("E505");
-						}else if(ind.getIndexSelect().toString().equalsIgnoreCase(ind.getE506().toString())){
-							cell.setCellValue("E506");
-						}else if(ind.getIndexSelect().toString().equalsIgnoreCase(ind.getE517().toString())){
-							cell.setCellValue("E517");
-						}
-						//INDEX BASES
-						cell = row.createCell(7);
-						cell.setCellValue(ind.getIndexSelect().toString());
-					}
+
+
+					//INDEX BASES- LEGAGY CODE
+					//cell = row.createCell(7);
+					//cell.setCellValue(ind.getIndexSelect().toString());
+
 
 					// SPECIFIC TO CRUK
 					cell = row.createCell(9);
-					cell.setCellValue(crukPipeline + ";identifier=" + ws.getCRUKIdentifier().get(i));
+					cell.setCellValue(crukPipeline + ";pairs=" + ws.getCRUKIdentifier().get(i) + ";sampleType=" + sampleT);
 
 				}else if(select.equalsIgnoreCase("TAM")){
 					// SPECIFIC TO TAM
