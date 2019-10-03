@@ -37,8 +37,8 @@ public class CRUKIndexes {
         put("UP05", Arrays.asList("AGCGATAG", "ACGAATAA"));
         put("UP06", Arrays.asList("GCGATTAA", "GATCTGCT"));
         put("UP07", Arrays.asList("ATTCAGAA", "AGGCTATA"));
-        put("UP08", Arrays.asList("TTAATCAG", "GCCTCTAT"));
-        put("UP09", Arrays.asList("GAATAATC", "CTTCGCCT"));
+        put("UP08", Arrays.asList("GAATAATC", "GCCTCTAT"));
+        put("UP09", Arrays.asList("TTAATCAG", "CTTCGCCT"));
         put("UP10", Arrays.asList("CGCTCATT", "TAAGATTA"));
         put("UP11", Arrays.asList("TCCGCGAA", "AGTAAGTA"));
         put("UP12", Arrays.asList("ATTACTCG", "GACTTCCT"));
