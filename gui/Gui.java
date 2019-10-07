@@ -25,8 +25,7 @@ import javax.swing.JTextField;
  */
 public class Gui extends Menu {
 	
-	private final String[] indexes = new String[] {"Default", "FH1to24", "FH25to48", "E501", "E502", "E503",
-			"E504", "E505", "E506", "E517"};
+	private final String[] indexes = new String[] {"Default", "FH1to24", "FH25to48", "CRUKset1", "CRUKset2"};
 	// comboHack string is used to set index select combobox defaults sizes
 	private String comboHack = "aroundthis.";
 	JLabel worksheetLabel = new JLabel();

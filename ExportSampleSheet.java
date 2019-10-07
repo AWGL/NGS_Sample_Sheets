@@ -205,11 +205,11 @@ public class ExportSampleSheet {
 
 
 		// Is sample DNA or RNA (for indices)- create count variables
+		int offset = 0;
 		int dnaCount = 0;
-		int rnaCount = 16;
+		int rnaCount = 16; //Offset of RNA samples in indexes
 		for (int i = 0; i < ws.getLabNo().size(); i++) {
 			if(ws.getLabNo().get(i) != null){
-			    System.out.println(ws.getLabNo().get(i));
 				String labNo = ws.getLabNo().get(i);
 				row = worksheet.getRow(rowNum);
 				cell = row.createCell(0);
@@ -253,54 +253,62 @@ public class ExportSampleSheet {
 					CRUKIndexes cruki = new CRUKIndexes();
 					String selected = index.get(0).getIndexSelect();
 					int crukind = 404; // Set to high number so this will break if the correct assignment fails
-					int offset = 0;
-					if (selected.equals("FH1to24")) {
-						offset = 1;
-						if(sampleT.equals("DNA")) {
-							offset += dnaCount;
-						}else if(sampleT.equals("RNA")){
-							offset += rnaCount;
-						}else{
-							throw new Exception("Could not determine if sample" + labNo + "is DNA or RNA.");
+
+					if (!"CRUKset1".equals(selected) && !"CRUKset2".equals(selected)) {
+						//Do not write out indexes
+						;
+					}else {
+						if (selected.equals("CRUKset1")) {
+							offset = 0;
+							if (sampleT.equals("DNA")) {
+								offset += dnaCount;
+							} else if (sampleT.equals("RNA")) {
+								offset += rnaCount;
+							} else {
+								throw new Exception("Could not determine if sample" + labNo + "is DNA or RNA.");
+							}
+						} else if (selected.equals("CRUKset2")) {
+							offset = 8;
+							if (sampleT.equals("DNA")) {
+								offset += dnaCount;
+							} else if (sampleT.equals("RNA")) {
+								offset += rnaCount;
+							} else {
+								throw new Exception("Could not determine if sample" + labNo + "is DNA or RNA.");
+							}
 						}
-					} else if (selected.equals("FH25to48")) {
-						offset = 9;
-						if(sampleT.equals("DNA")) {
-							offset += dnaCount;
-						}else if(sampleT.equals("RNA")){
-							offset += rnaCount;
-						}else{
-							throw new Exception("Could not determine if sample" + labNo + "is DNA or RNA.");
-						}
+						//Write out indexes
+						crukind = offset;
+						String crukIndNum = Integer.toString(crukind);
+						String indexName = cruki.getCrukIndices().get(crukIndNum).get(0);
+						cell = row.createCell(4);
+						cell.setCellValue(indexName); //Set to compound index name
+						String i7Name = cruki.getCrukIndices().get(crukIndNum).get(1);
+						cell = row.createCell(5);
+						cell.setCellValue(i7Name); //Set to i7 index name
+						String crukInd1 = cruki.getCrukIndices().get(crukIndNum).get(3); //First index
+						cell = row.createCell(6);
+						cell.setCellValue(crukInd1);
+						String crukInd2 = cruki.getCrukIndices().get(crukIndNum).get(4); //Second index
+						String i5Name = cruki.getCrukIndices().get(crukIndNum).get(2);
+						cell = row.createCell(7);
+						cell.setCellValue(i5Name); //Set to i5 index name
+						cell = row.createCell(8);
+						cell.setCellValue(crukInd2);
 					}
-					crukind = offset + i; //Index couuuuntss are goinnnn up in twos
-					String crukIndNum = Integer.toString(crukind);
-					cell = row.createCell(3);
-					cell.setCellValue(crukIndNum); //Set to compound index name
-					cell = row.createCell(4);
-					cell.setCellValue(crukIndNum); //Set to i7 index name
 
 					/*
-                    String crukInd1 = cruki.getCrukIndices().get(crukIndNum).get(0); //First index
-					cell = row.createCell(5);
-					cell.setCellValue(crukInd1);
-					String crukInd2 = cruki.getCrukIndices().get(crukIndNum).get(1); //Second index
-					cell = row.createCell(6);
-					cell.setCellValue(crukIndNum); //Set to i5 index name
-					cell = row.createCell(7);
-					cell.setCellValue(crukInd2);
-
 
 					//INDEX BASES- LEGAGY CODE
 					//cell = row.createCell(7);
 					//cell.setCellValue(ind.getIndexSelect().toString());
 
-
+                    */
 					// SPECIFIC TO CRUK
-					cell = row.createCell(9);
+					cell = row.createCell(10);
 					cell.setCellValue(crukPipeline + ";pairs=" + ws.getCRUKIdentifier().get(i) +
 										";sampleType=" + sampleT);
-                    */
+
 				}else if(select.equalsIgnoreCase("TAM")){
 					// SPECIFIC TO TAM
 					cell.setCellValue(ws.getWorksheet().get(i));

@@ -13,7 +13,7 @@ import nhs.cardiff.genetics.ngssamplesheets.Index;
 /**
  * @author Rhys Cooper and Sara Rey
  * @Date 13/06/2019
- * @version 1.4.9
+ * @version 1.5.0
  * 
  */
 public class Controller{
@@ -313,6 +313,10 @@ public class Controller{
 		index.setIndexSelect(index.getFH1to24());
 		}else if(indexSelect.getSelectedItem().toString().equalsIgnoreCase("FH25to48")){
 		index.setIndexSelect(index.getFH25to48());
+		}else if(indexSelect.getSelectedItem().toString().equalsIgnoreCase("CRUKset1")){
+			index.setIndexSelect(index.getCRUKset1());
+		}else if(indexSelect.getSelectedItem().toString().equalsIgnoreCase("CRUKset2")){
+			index.setIndexSelect(index.getCRUKset2());
 	}
 	}
 }
