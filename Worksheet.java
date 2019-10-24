@@ -2,8 +2,8 @@ package nhs.cardiff.genetics.ngssamplesheets;
 
 /**
  * @author Rhys Cooper & Sara Rey
- * @Date 12/08/2019
- * @version 1.4.8
+ * @Date 16/09/2019
+ * @version 1.5.0
  *
  */
 
@@ -24,6 +24,7 @@ public class Worksheet {
 	private ArrayList<String> index;
 	private ArrayList<String> first;
 	private ArrayList<String> second;
+	private ArrayList<String> ident;
 	
 	public Worksheet(){
 		this.worksheet = new ArrayList<String>();
@@ -39,6 +40,7 @@ public class Worksheet {
 		this.index = new ArrayList<String>();
 		this.first = new ArrayList<String>();
 		this.second = new ArrayList<String>();
+		this.ident = new ArrayList<String>();
 	}
 
 	/**
@@ -246,6 +248,20 @@ public class Worksheet {
      * @param second The second index for pan cancer samples (reverse complement).
      */
     public void setPanSecondIndex(String second) {
-        this.second.add(second);
+		this.second.add(second);
+	}
+
+	/**
+	 *
+	 * @return Returns ident, The identifier for the CRUK samples (first name field).
+	 */
+	public ArrayList<String> getCRUKIdentifier() { return ident; }
+
+	/**
+	 *
+	 * @param ident The identifier for the CRUK samples (first name field).
+	 */
+	public void setCRUKIdentifier(String ident) {
+		this.ident.add(ident);
     }
 }

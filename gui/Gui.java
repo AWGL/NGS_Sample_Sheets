@@ -19,13 +19,13 @@ import javax.swing.JTextField;
 
 /**
  * @author Rhys Cooper & Sara Rey
- * @Date 12/08/2019
- * @version 1.4.8
+ * @Date 22/08/2019
+ * @version 1.5.0
  * 
  */
 public class Gui extends Menu {
 	
-	private final String[] indexes = new String[] {"Default", "E501", "E502", "E503", "E504", "E505", "E506", "E517"};
+	private final String[] indexes = new String[] {"Default", "FH1to24", "FH25to48", "CRUKset1", "CRUKset2"};
 	// comboHack string is used to set index select combobox defaults sizes
 	private String comboHack = "aroundthis.";
 	JLabel worksheetLabel = new JLabel();
@@ -47,7 +47,7 @@ public class Gui extends Menu {
 		
 		//**************** FRAME ****************
 		// CREATE FRAME
-		JFrame frame = new JFrame("NGS Sample Sheet Generator - Version 1.4.8");
+		JFrame frame = new JFrame("NGS Sample Sheet Generator - Version 1.5.0");
 		frame.setJMenuBar(menuBar);
 		// Add mainpanel which contains all subpanels
 		frame.add(mainPanel());

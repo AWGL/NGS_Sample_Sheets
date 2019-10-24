@@ -5,8 +5,8 @@ package nhs.cardiff.genetics.ngssamplesheets;
 
 /**
  * @author Rhys Cooper & Sara Rey
- * @Date 13/06/2019
- * @version 1.4.8
+ * @Date 16/09/2019
+ * @version 1.5.0
  * 
  */
 
@@ -132,7 +132,8 @@ public class ImportWorksheet {
 					+ " DNA_Worksheet.UPDATEDBY,"
 					+ " DNA_WORKSHEET_DET.WORKSHEET,"
 					+ " PATIENT.SEX,"
-					+ " DNALAB.REASON_FOR_REFERRAL"
+					+ " DNALAB.REASON_FOR_REFERRAL,"
+					+ " PATIENT.FIRSTNAME"
 					+ " FROM (((DNA_Worksheet LEFT JOIN DNA_TEST"
 					+ " ON [DNA_Worksheet].TEST = [DNA_TEST].TEST)"
 					+ " INNER JOIN DNA_WORKSHEET_DET"
@@ -175,6 +176,7 @@ public class ImportWorksheet {
 				ws.setUpdateDate(rs.getString("UPDATEDDATE").substring(2, 10).replace("-", "/"));
 				ws.setSexes(rs.getString("SEX"));
 				ws.setGenes(rs.getString("REASON_FOR_REFERRAL"));
+				ws.setCRUKIdentifier(rs.getString("FIRSTNAME"));
 
 
 				//If pancancer (front end selection) add indices to ws object in order
@@ -222,7 +224,8 @@ public class ImportWorksheet {
 								|| temp.equalsIgnoreCase("BRCA panel") && (done == false)
 								|| temp.equalsIgnoreCase("GeneRead pooled") && (done == false)
 								|| temp.equalsIgnoreCase("haem NGS") && (done == false)
-							    || temp.equalsIgnoreCase("PanCancerNGS panel") && (done == false)){
+							    || temp.equalsIgnoreCase("PanCancerNGS panel") && (done == false)
+								|| temp.equalsIgnoreCase("FH NGS Panel v1") && (done == false)){
 							ws.setPanel(temp);
 							ws.setComments(rs2.getString("COMMENTS"));
 							done = true;
@@ -286,7 +289,9 @@ public class ImportWorksheet {
 				|| (test.equalsIgnoreCase("BRCA panel"))
 				|| (test.equalsIgnoreCase("GeneRead pooled"))
 				|| (test.equalsIgnoreCase("haem NGS"))
-		        || (test.equalsIgnoreCase("PanCancerNGS panel"))) {
+		        || (test.equalsIgnoreCase("PanCancerNGS panel"))
+				|| (test.equalsIgnoreCase("FH NGS Panel v1"))){
+
 			goNGS = true;
 		} else {
 			goNGS = false;

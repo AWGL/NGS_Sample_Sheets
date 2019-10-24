@@ -5,8 +5,8 @@ package nhs.cardiff.genetics.ngssamplesheets;
 
 /**
  * @author Rhys Cooper & Sara Rey
- * @Date 12/08/2019
- * @version 1.4.8
+ * @Date 16/09/2019
+ * @version 1.5.0
  * 
  */
 import java.lang.*;
@@ -37,6 +37,7 @@ public class ExportSampleSheet {
 	private String myeloidPipeline;
 	private String panCancerPipeline;
 	private String pancrmPipeline;
+	private String fhPipeline;
 	private int crukRow;
 	//private int crukAnRow;
 	private int truRow;
@@ -45,11 +46,12 @@ public class ExportSampleSheet {
 	private int wcbRow;
 	private int myeloidRow;
 	private int panCancerRow;
+	private int fhRow;
 
 	public ExportSampleSheet() {
 		properties();
 		filepath = "";
-		crukRow = 17;
+		crukRow = 21;
 		//crukAnRow = 28;
 		truRow = 14;
 		truOneRow = 17;
@@ -57,6 +59,7 @@ public class ExportSampleSheet {
 		wcbRow = 14;
 		myeloidRow = 17;
 		panCancerRow = 18;
+		fhRow = 17;
 	}
 
 	/**
@@ -66,11 +69,11 @@ public class ExportSampleSheet {
 	 * @param test The test specified on the worksheet
 	 * @throws IOException Throws exception if cannot save output file
 	 */
-	public void selectExport(Worksheet ws, ArrayList<Index> index, String test) throws IOException{
+	public void selectExport(Worksheet ws, ArrayList<Index> index, String test) throws IOException, Exception{
 		if(test.equalsIgnoreCase("NEXTERA NGS")){
 			// OLD SINGLE INDEX
 			//exportCRUKTAM(ws, index, "CRUK", crukRow, "Y:\\samplesheet-templates\\CRUK-SeqOnly.xls");
-			exportCRUKTAMMye(ws, index, "CRUK", crukRow, "Y:\\samplesheet-templates\\CRUK-SeqOnly-DualIndex.xls");
+			exportCRUKTAMMye(ws, index, "CRUK", crukRow, "Y:\\samplesheet-templates\\CRUK.xls");
 			// ANALYSIS SHEET NO LONGER REQUIRED
 			//exportCRUKTAM(ws, index, "ANALYSIS", crukAnRow, "Y:\\samplesheet-templates\\CRUK-analysis.xls");
 		}else if(test.equalsIgnoreCase("TruSight Cancer")){
@@ -86,9 +89,12 @@ public class ExportSampleSheet {
 		}else if(test.equalsIgnoreCase("haem NGS")) {
 			exportCRUKTAMMye(ws, index, "MYELOID", myeloidRow, "Y:\\samplesheet-templates\\Myeloid.xls");
 		}else if(test.equalsIgnoreCase("PanCancerNGS panel")) {
-			exportPanCancer(ws, index, "PANCANCER", panCancerRow, "Y:\\samplesheet-templates\\Pancancer.xls");;
+			exportPanCancer(ws, index, "PANCANCER", panCancerRow, "Y:\\samplesheet-templates\\Pancancer.xls");
+		}else if(test.equalsIgnoreCase("FH NGS Panel v1")) {
+			exportTrusight(ws, index,"FH", fhRow, "Y:\\samplesheet-templates\\FH.xls" );
+		}
 	}
-}
+
 
 	/**
 	 * 
@@ -120,6 +126,7 @@ public class ExportSampleSheet {
 		  myeloidPipeline = properties.getProperty("MYELOID");
 		  panCancerPipeline = properties.getProperty("PANCANCER");
 		  pancrmPipeline = properties.getProperty("PANCRM");
+		  fhPipeline = properties.getProperty("FH");
 
 		} catch (IOException e) {
 			
@@ -148,6 +155,8 @@ public class ExportSampleSheet {
 			filepath = "L:\\Auto NGS Sample sheets\\Myeloid\\";
 		} else if (assay.equals("pancancer")) {
 			filepath = "L:\\Auto NGS Sample sheets\\Pancancer\\";
+		} else if (assay.equals("FamHyp")) {
+			filepath = "L:\\Auto NGS Sample sheets\\FH\\";
 		}
 		
 		if (type.equals("analysis")) {
@@ -174,7 +183,7 @@ public class ExportSampleSheet {
 	 * @param file Filepath string for file save location
 	 * @throws IOException Thrown if file cannot be saved
 	 */
-	private void exportCRUKTAMMye(Worksheet ws, ArrayList<Index> index, String select, int rowNum, String file) throws IOException {
+	private void exportCRUKTAMMye(Worksheet ws, ArrayList<Index> index, String select, int rowNum, String file) throws IOException, Exception {
 		FileInputStream fileIn = new FileInputStream(file);
 		HSSFWorkbook workbook = new HSSFWorkbook(fileIn);
 		HSSFSheet worksheet = workbook.getSheet("Sheet1");
@@ -186,53 +195,119 @@ public class ExportSampleSheet {
 		cell = row.createCell(1);
 		cell.setCellValue(ws.getWorksheet().get(0));
 		worksheetName = ws.getWorksheet().get(0);
-		
+
 		// SPECIFIC TO CRUK SHEETS
-		if(select.equalsIgnoreCase("CRUK") || select.equalsIgnoreCase("ANALYSIS")){
+		if(select.equalsIgnoreCase("CRUK") || select.equalsIgnoreCase("ANALYSIS")) {
 			row = worksheet.getRow(4);
 			cell = row.createCell(1);
 			cell.setCellValue(ws.getUpdateDate().get(0));
 		}
 
+
+		// Is sample DNA or RNA (for indices)- create count variables
+		int offset = 0;
+		int dnaCount = 0;
+		int rnaCount = 16; //Offset of RNA samples in indexes
 		for (int i = 0; i < ws.getLabNo().size(); i++) {
 			if(ws.getLabNo().get(i) != null){
+				String labNo = ws.getLabNo().get(i);
 				row = worksheet.getRow(rowNum);
 				cell = row.createCell(0);
-				cell.setCellValue(ws.getLabNo().get(i));
+				cell.setCellValue(labNo);
 				cell = row.createCell(1);
-				if(select.equalsIgnoreCase("CRUK") || select.equalsIgnoreCase("ANALYSIS")){
+
+				if(select.equalsIgnoreCase("CRUK") || select.equalsIgnoreCase("ANALYSIS")) {
 					//SPECIFIC TO CRUK
+					//Variable to store sample type
+					String sampleT;
 					cell.setCellValue(ws.getLabNo().get(i));
 					cell = row.createCell(2);
 					cell.setCellValue(ws.getWorksheet().get(i));
-					
-					// DUAL INDEXES FOR CRUK
-					for (Index ind : index) {
-						 //INDEX NAME
-						cell = row.createCell(6);
-						if(ind.getIndexSelect().toString().equalsIgnoreCase(ind.getE501().toString())){
-							cell.setCellValue("E501");
-						}else if(ind.getIndexSelect().toString().equalsIgnoreCase(ind.getE502().toString())){
-							cell.setCellValue("E502");
-						}else if(ind.getIndexSelect().toString().equalsIgnoreCase(ind.getE503().toString())){
-							cell.setCellValue("E503");
-						}else if(ind.getIndexSelect().toString().equalsIgnoreCase(ind.getE504().toString())){
-							cell.setCellValue("E504");
-						}else if(ind.getIndexSelect().toString().equalsIgnoreCase(ind.getE505().toString())){
-							cell.setCellValue("E505");
-						}else if(ind.getIndexSelect().toString().equalsIgnoreCase(ind.getE506().toString())){
-							cell.setCellValue("E506");
-						}else if(ind.getIndexSelect().toString().equalsIgnoreCase(ind.getE517().toString())){
-							cell.setCellValue("E517");
+					// Is sample DNA or RNA (for indices)
+					try {
+						if (labNo.substring(labNo.lastIndexOf('M')).charAt(1) == '8') {
+							; //.equals('8')) {
+							rnaCount += 1;
+							sampleT = "RNA";
+						} else {
+							dnaCount += 1;
+							sampleT = "DNA";
 						}
-						 //INDEX BASES
-						cell = row.createCell(7);
-						cell.setCellValue(ind.getIndexSelect().toString());
+					} catch (IndexOutOfBoundsException Ex) {
+						// Sample is named atypically
+						if (labNo.matches("(?i:.*NTC.*DNA.*)")) {
+							dnaCount += 1;
+							sampleT = "DNA";
+						} else if (labNo.matches("(?i:.*NTC.*)")) {
+							rnaCount += 1;
+							sampleT = "RNA";
+						} else if (labNo.matches("(?i:.*Control.*DNA.*)")) {
+							dnaCount += 1;
+							sampleT = "DNA";
+						} else {
+							throw new IndexOutOfBoundsException("Sample name " + labNo + " format is not supported.");
+						}
 					}
 
+					// CRUK rotate indexes
+					CRUKIndexes cruki = new CRUKIndexes();
+					String selected = index.get(0).getIndexSelect();
+					int crukind = 404; // Set to high number so this will break if the correct assignment fails
+
+					if (!"CRUKset1".equals(selected) && !"CRUKset2".equals(selected)) {
+						//Do not write out indexes
+						;
+					}else {
+						if (selected.equals("CRUKset1")) {
+							offset = 0;
+							if (sampleT.equals("DNA")) {
+								offset += dnaCount;
+							} else if (sampleT.equals("RNA")) {
+								offset += rnaCount;
+							} else {
+								throw new Exception("Could not determine if sample" + labNo + "is DNA or RNA.");
+							}
+						} else if (selected.equals("CRUKset2")) {
+							offset = 8;
+							if (sampleT.equals("DNA")) {
+								offset += dnaCount;
+							} else if (sampleT.equals("RNA")) {
+								offset += rnaCount;
+							} else {
+								throw new Exception("Could not determine if sample" + labNo + "is DNA or RNA.");
+							}
+						}
+						//Write out indexes
+						crukind = offset;
+						String crukIndNum = Integer.toString(crukind);
+						String indexName = cruki.getCrukIndices().get(crukIndNum).get(0);
+						cell = row.createCell(4);
+						cell.setCellValue(indexName); //Set to compound index name
+						String i7Name = cruki.getCrukIndices().get(crukIndNum).get(1);
+						cell = row.createCell(5);
+						cell.setCellValue(i7Name); //Set to i7 index name
+						String crukInd1 = cruki.getCrukIndices().get(crukIndNum).get(3); //First index
+						cell = row.createCell(6);
+						cell.setCellValue(crukInd1);
+						String crukInd2 = cruki.getCrukIndices().get(crukIndNum).get(4); //Second index
+						String i5Name = cruki.getCrukIndices().get(crukIndNum).get(2);
+						cell = row.createCell(7);
+						cell.setCellValue(i5Name); //Set to i5 index name
+						cell = row.createCell(8);
+						cell.setCellValue(crukInd2);
+					}
+
+					/*
+
+					//INDEX BASES- LEGAGY CODE
+					//cell = row.createCell(7);
+					//cell.setCellValue(ind.getIndexSelect().toString());
+
+                    */
 					// SPECIFIC TO CRUK
-					cell = row.createCell(9);
-					cell.setCellValue(crukPipeline);
+					cell = row.createCell(10);
+					cell.setCellValue(crukPipeline + ";pairs=" + ws.getCRUKIdentifier().get(i) +
+										";sampleType=" + sampleT);
 
 				}else if(select.equalsIgnoreCase("TAM")){
 					// SPECIFIC TO TAM
@@ -244,13 +319,17 @@ public class ExportSampleSheet {
 					// SPECIFIC TO Myeloid
 					cell.setCellValue(ws.getWorksheet().get(i));
 					cell = row.createCell(8);
-					cell.setCellValue(myeloidPipeline);
+					String referral = ws.getGenes().get(i);
+					if(referral.equalsIgnoreCase("Myeloid NGS Panel")){
+						referral = "Myeloid";
+					}
+					cell.setCellValue(myeloidPipeline + ";referral=" + referral);
 				}
 
 			}
 			rowNum += 1;
 		}
-		
+
 		if(select.equalsIgnoreCase("CRUK")){
 			save(workbook, "", "CRUK");
 		}else if(select.equalsIgnoreCase("ANALYSIS")){
@@ -262,6 +341,7 @@ public class ExportSampleSheet {
 		}
 
 	}
+
 
 	/**
 	 * 
@@ -293,6 +373,26 @@ public class ExportSampleSheet {
 				cell.setCellValue(ws.getLabNo().get(i));
 				cell = row.createCell(1);
 				cell.setCellValue(ws.getWorksheet().get(i));
+				// Write out FH index set
+				if(select.equalsIgnoreCase("FH")) {
+					FHIndexes fhi = new FHIndexes();
+					String selected = index.get(0).getIndexSelect();
+					int fhind = 404; // Set to high number so this will break if the correct assignment fails
+					if(selected.equals("FH1to24")) {
+						int offset = 1;
+						fhind = offset + i;
+					} else if(selected.equals("FH25to48")){
+						int offset = 25;
+						fhind = offset + i;
+					}
+					String fhIndNum = Integer.toString(fhind);
+					cell = row.createCell(3);
+					cell.setCellValue(fhIndNum);
+					String fhInd = fhi.getFhIndices().get(fhIndNum);
+					cell = row.createCell(4);
+					cell.setCellValue(fhInd);
+				}
+
 				cell = row.createCell(8);
 				String sex;
 
@@ -313,6 +413,8 @@ public class ExportSampleSheet {
 					cell.setCellValue(trusightPipeline + ";sex=" + sex);
 				}else if(select.equalsIgnoreCase("TRUSIGHTONE")){
 					cell.setCellValue(trusightOnePipeline + ";sex=" + sex);
+				}else if(select.equalsIgnoreCase("FH")){
+					cell.setCellValue(fhPipeline + ";sex=" + sex);
 				}
 			}
 			rowNum += 1;
@@ -322,6 +424,8 @@ public class ExportSampleSheet {
 			rowNum = truRow;
 		}else if(select.equalsIgnoreCase("TRUSIGHTONE")){
 			rowNum = truOneRow;
+		}else if (select.equalsIgnoreCase("FH")) {
+			rowNum = fhRow;
 		}
 		/*
 		for (int i = 0; i < ws.getComments().size(); i++) {
@@ -337,6 +441,8 @@ public class ExportSampleSheet {
 			save(workbook, "", "Trusight");
 		}else if(select.equalsIgnoreCase("TRUSIGHTONE")){
 			save(workbook, "", "Trusightone");
+		}else if(select.equalsIgnoreCase("FH")){
+			save(workbook, "", "FamHyp");
 		}
 	}	
 

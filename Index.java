@@ -10,6 +10,10 @@ public class Index {
 	private String E505 = "GTAAGGAG";
 	private String E506 = "ACTGCATA";
 	private String E517 = "GCGTAAGA";
+	private String FH1to24 = "FH1to24";
+	private String FH25to48 = "FH25to48";
+	private String CRUKset1 = "CRUKset1";
+	private String CRUKset2 = "CRUKset2";
 	
 	
 	private String indexSelect;
@@ -88,6 +92,38 @@ public class Index {
 	 */
 	public String getE517() {
 		return E517;
+	}
+
+	/**
+	 *
+	 * @return Returns FH1to24 index name
+	 */
+	public String getFH1to24() {
+		return FH1to24;
+	}
+
+	/**
+	 *
+	 * @return Returns FH25to48 index name
+	 */
+	public String getFH25to48() {
+		return FH25to48;
+	}
+
+	/**
+	 *
+	 * @return Returns CRUK set 1 index name
+	 */
+	public String getCRUKset1() {
+		return CRUKset1;
+	}
+
+	/**
+	 *
+	 * @return Returns CRUK set 2 index name
+	 */
+	public String getCRUKset2() {
+		return CRUKset2;
 	}
 
 }
