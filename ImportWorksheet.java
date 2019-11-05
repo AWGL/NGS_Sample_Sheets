@@ -225,7 +225,8 @@ public class ImportWorksheet {
 								|| temp.equalsIgnoreCase("GeneRead pooled") && (done == false)
 								|| temp.equalsIgnoreCase("haem NGS") && (done == false)
 							    || temp.equalsIgnoreCase("PanCancerNGS panel") && (done == false)
-								|| temp.equalsIgnoreCase("FH NGS Panel v1") && (done == false)){
+								|| temp.equalsIgnoreCase("FH NGS Panel v1") && (done == false)
+						        || temp.equalsIgnoreCase("Illumina TST170_DNA") && (done == false)){
 							ws.setPanel(temp);
 							ws.setComments(rs2.getString("COMMENTS"));
 							done = true;
@@ -290,7 +291,8 @@ public class ImportWorksheet {
 				|| (test.equalsIgnoreCase("GeneRead pooled"))
 				|| (test.equalsIgnoreCase("haem NGS"))
 		        || (test.equalsIgnoreCase("PanCancerNGS panel"))
-				|| (test.equalsIgnoreCase("FH NGS Panel v1"))){
+                || (test.equalsIgnoreCase("FH NGS Panel v1"))
+				|| (test.equalsIgnoreCase("Illumina TST170_DNA"))){
 
 			goNGS = true;
 		} else {
