@@ -218,6 +218,7 @@ public class ImportWorksheet {
 						// Check is the test is actually NGS and not MLPA etc
 						// As we only want the comments from the NGS ones.
 						if(temp.equalsIgnoreCase("Trusight Cancer") && (done == false)
+								|| temp.equalsIgnoreCase("NEXTERA NGS") && (done == false)
 								|| temp.equalsIgnoreCase("TruSight One CES panel") && (done == false)
 								|| temp.equalsIgnoreCase("TAM panel") && (done == false)
 								|| temp.equalsIgnoreCase("CRM panel") && (done == false)
