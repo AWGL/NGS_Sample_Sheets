@@ -87,8 +87,10 @@ public class ExportSampleSheet {
 		}else if(test.equalsIgnoreCase("PanCancerNGS panel")) {
 			exportPanCancer(ws, index, "PANCANCER", panCancerRow, "Y:\\samplesheet-templates\\Pancancer.xls");
 		}else if(test.equalsIgnoreCase("FH NGS Panel v1")) {
-			exportTrusight(ws, index,"FH", fhRow, "Y:\\samplesheet-templates\\FH.xls" );
-		//}else if(test.equalIgnoreCase("NEXTERA NGS")){
+			exportTrusight(ws, index, "FH", fhRow, "Y:\\samplesheet-templates\\FH.xls");
+		}else if(test.equalsIgnoreCase("BRCA panel")) {
+			exportWCB(ws, index, "BRCA", wcbRow, "Y:\\samplesheet-templates\\WCB.xls");
+			//}else if(test.equalIgnoreCase("NEXTERA NGS")){
 			//exportCRUKTAM(ws, index, "CRUK", crukRow, "Y:\\samplesheet-templates\\CRUK-SeqOnly.xls");
 			// ANALYSIS SHEET NO LONGER REQUIRED
 			//exportCRUKTAM(ws, index, "ANALYSIS", crukAnRow, "Y:\\samplesheet-templates\\CRUK-analysis.xls");

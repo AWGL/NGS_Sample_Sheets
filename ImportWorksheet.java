@@ -20,6 +20,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
 public class ImportWorksheet {
 	private ArrayList<Worksheet> worksheets = new ArrayList<Worksheet>();
 	private String db;
@@ -47,6 +52,7 @@ public class ImportWorksheet {
 	 */
 	public void process(ArrayList<String> input, ArrayList<Index> index, Boolean combine, Boolean pan) throws Exception{
 		ExportSampleSheet export = new ExportSampleSheet();
+
 		// reduce input down to amount of worksheets selected
 		// don't need this null removal? Test...
 		input.remove(null);
