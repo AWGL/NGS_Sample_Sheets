@@ -20,10 +20,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class ImportWorksheet {
 	private ArrayList<Worksheet> worksheets = new ArrayList<Worksheet>();
@@ -217,6 +213,7 @@ public class ImportWorksheet {
 				st2.setString(1, ws.getLabNo().get(ws.getLabNo().size() - 1));
 
 				if (goNGS && ws.getLabNo() != null) {
+					System.out.println(ws.getLabNo());
 					ResultSet rs2 = st2.executeQuery();
 					done = false;
 					while (rs2.next()) {
@@ -238,8 +235,11 @@ public class ImportWorksheet {
 							ws.setComments(rs2.getString("COMMENTS"));
 							done = true;
 						}
-
-					}	
+					}
+					if(done == false){
+						ws.setPanel("null panel");
+						ws.setComments("no comments");
+					}
 				} else if (!goNGS) {
 					Exception ex = new Exception("Not a Valid NGS worksheet, please try again");
 					throw ex;
