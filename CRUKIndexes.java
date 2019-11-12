@@ -27,7 +27,7 @@ public class CRUKIndexes {
         put("11", Arrays.asList("CP11", "D721", "D519", "CATCGAGG", "CCGTCGCC"));
         put("12", Arrays.asList("CP12", "D723", "D519", "CTCGACTG", "CCGTCGCC"));
         put("13", Arrays.asList("CP13", "D711", "D519", "TCTCGCGC", "CCGTCGCC"));
-        put("14", Arrays.asList("CP14", "D712", "D520", "CATCGAGG", "GTCCGAGG"));
+        put("14", Arrays.asList("CP14", "D721", "D520", "CATCGAGG", "GTCCGAGG"));
         put("15", Arrays.asList("CP15", "D723", "D520", "CTCGACTG", "GTCCGAGG"));
         put("16", Arrays.asList("CP16", "D709", "D520", "CGGCTATG", "GTCCGAGG"));
         put("17", Arrays.asList("UP01", "D702", "D503", "TCCGGAGA", "AGGATAGG"));
