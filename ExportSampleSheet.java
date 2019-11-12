@@ -70,12 +70,8 @@ public class ExportSampleSheet {
 	 * @throws IOException Throws exception if cannot save output file
 	 */
 	public void selectExport(Worksheet ws, ArrayList<Index> index, String test) throws IOException, Exception{
-		if(test.equalsIgnoreCase("NEXTERA NGS")){
-			// OLD SINGLE INDEX
-			//exportCRUKTAM(ws, index, "CRUK", crukRow, "Y:\\samplesheet-templates\\CRUK-SeqOnly.xls");
+		if(test.equalsIgnoreCase("Illumina TST170_DNA")){
 			exportCRUKTAMMye(ws, index, "CRUK", crukRow, "Y:\\samplesheet-templates\\CRUK.xls");
-			// ANALYSIS SHEET NO LONGER REQUIRED
-			//exportCRUKTAM(ws, index, "ANALYSIS", crukAnRow, "Y:\\samplesheet-templates\\CRUK-analysis.xls");
 		}else if(test.equalsIgnoreCase("TruSight Cancer")){
 			exportTrusight(ws, index, "TRUSIGHT", truRow, "Y:\\samplesheet-templates\\Trusight.xls");
 		}else if(test.equalsIgnoreCase("TruSight One CES panel")){
@@ -91,7 +87,13 @@ public class ExportSampleSheet {
 		}else if(test.equalsIgnoreCase("PanCancerNGS panel")) {
 			exportPanCancer(ws, index, "PANCANCER", panCancerRow, "Y:\\samplesheet-templates\\Pancancer.xls");
 		}else if(test.equalsIgnoreCase("FH NGS Panel v1")) {
-			exportTrusight(ws, index,"FH", fhRow, "Y:\\samplesheet-templates\\FH.xls" );
+			exportTrusight(ws, index, "FH", fhRow, "Y:\\samplesheet-templates\\FH.xls");
+		}else if(test.equalsIgnoreCase("BRCA panel")) {
+			exportWCB(ws, index, "BRCA", wcbRow, "Y:\\samplesheet-templates\\WCB.xls");
+			//}else if(test.equalIgnoreCase("NEXTERA NGS")){
+			//exportCRUKTAM(ws, index, "CRUK", crukRow, "Y:\\samplesheet-templates\\CRUK-SeqOnly.xls");
+			// ANALYSIS SHEET NO LONGER REQUIRED
+			//exportCRUKTAM(ws, index, "ANALYSIS", crukAnRow, "Y:\\samplesheet-templates\\CRUK-analysis.xls");
 		}
 	}
 

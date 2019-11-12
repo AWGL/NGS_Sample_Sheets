@@ -20,6 +20,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
 public class ImportWorksheet {
 	private ArrayList<Worksheet> worksheets = new ArrayList<Worksheet>();
 	private String db;
@@ -47,6 +52,7 @@ public class ImportWorksheet {
 	 */
 	public void process(ArrayList<String> input, ArrayList<Index> index, Boolean combine, Boolean pan) throws Exception{
 		ExportSampleSheet export = new ExportSampleSheet();
+
 		// reduce input down to amount of worksheets selected
 		// don't need this null removal? Test...
 		input.remove(null);
@@ -218,6 +224,7 @@ public class ImportWorksheet {
 						// Check is the test is actually NGS and not MLPA etc
 						// As we only want the comments from the NGS ones.
 						if(temp.equalsIgnoreCase("Trusight Cancer") && (done == false)
+								|| temp.equalsIgnoreCase("NEXTERA NGS") && (done == false)
 								|| temp.equalsIgnoreCase("TruSight One CES panel") && (done == false)
 								|| temp.equalsIgnoreCase("TAM panel") && (done == false)
 								|| temp.equalsIgnoreCase("CRM panel") && (done == false)
@@ -225,7 +232,8 @@ public class ImportWorksheet {
 								|| temp.equalsIgnoreCase("GeneRead pooled") && (done == false)
 								|| temp.equalsIgnoreCase("haem NGS") && (done == false)
 							    || temp.equalsIgnoreCase("PanCancerNGS panel") && (done == false)
-								|| temp.equalsIgnoreCase("FH NGS Panel v1") && (done == false)){
+								|| temp.equalsIgnoreCase("FH NGS Panel v1") && (done == false)
+						        || temp.equalsIgnoreCase("Illumina TST170_DNA") && (done == false)){
 							ws.setPanel(temp);
 							ws.setComments(rs2.getString("COMMENTS"));
 							done = true;
@@ -290,7 +298,8 @@ public class ImportWorksheet {
 				|| (test.equalsIgnoreCase("GeneRead pooled"))
 				|| (test.equalsIgnoreCase("haem NGS"))
 		        || (test.equalsIgnoreCase("PanCancerNGS panel"))
-				|| (test.equalsIgnoreCase("FH NGS Panel v1"))){
+                || (test.equalsIgnoreCase("FH NGS Panel v1"))
+				|| (test.equalsIgnoreCase("Illumina TST170_DNA"))){
 
 			goNGS = true;
 		} else {
