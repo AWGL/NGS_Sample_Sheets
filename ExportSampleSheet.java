@@ -501,7 +501,6 @@ public class ExportSampleSheet {
 		for (int i = 0; i < ws.getComments().size(); i++) {
 			if (ws.getLabNo().get(i) != null) {
 				row = worksheet.getRow(rowNum);
-				cell = row.createCell(6);
 				if (ws.getComments().get(i) == null) {
 					//Comments are null for pan referrals
 					//Note that equalsIgnoreCase is not null safe and if ws.getGenes().get(i) is null this will throw an exception
@@ -516,6 +515,7 @@ public class ExportSampleSheet {
 							|| ws.getGenes().get(i).equalsIgnoreCase("Prostate")
 							|| ws.getGenes().get(i).equalsIgnoreCase("Thyroid")
 							|| ws.getGenes().get(i).equalsIgnoreCase("Tumour")) {
+						cell = row.createCell(6);
 						cell.setCellValue(pancrmPipeline + ";referral=" + ws.getGenes().get(i));
 					}
 					// Removed as per request from Hood 08/01/2017
@@ -525,10 +525,13 @@ public class ExportSampleSheet {
 				} else if (ws.getComments().get(i).equalsIgnoreCase("FOCUS4")
 						|| ws.getComments().get(i).equalsIgnoreCase("FOCUS 4")
 						|| ws.getComments().get(i).equalsIgnoreCase("GIST")) {
+					cell = row.createCell(6);
 					cell.setCellValue(focus4Pipeline + ";referral=" + ws.getGenes().get(i));
 				} else if (ws.getComments().get(i).equalsIgnoreCase("WCB")) {
+					cell = row.createCell(6);
 					cell.setCellValue(wcbPipeline + ";referral=" + ws.getGenes().get(i));
 				} else if (ws.getComments().get(i).equalsIgnoreCase("BRCA")) {
+					cell = row.createCell(6);
 					cell.setCellValue(brcaPipeline + ";referral=" + ws.getGenes().get(i));
 				}
 				rowNum += 1;
