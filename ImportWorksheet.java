@@ -213,7 +213,6 @@ public class ImportWorksheet {
 				st2.setString(1, ws.getLabNo().get(ws.getLabNo().size() - 1));
 
 				if (goNGS && ws.getLabNo() != null) {
-					System.out.println(ws.getLabNo());
 					ResultSet rs2 = st2.executeQuery();
 					done = false;
 					while (rs2.next()) {
