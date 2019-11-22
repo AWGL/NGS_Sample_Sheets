@@ -322,8 +322,11 @@ public class ExportSampleSheet {
 					cell.setCellValue(ws.getWorksheet().get(i));
 					cell = row.createCell(8);
 					String referral = ws.getGenes().get(i);
-					if(referral.equalsIgnoreCase("Myeloid NGS Panel")){
-						referral = "Myeloid";
+					if(referral != null) {
+						if (referral.equalsIgnoreCase("MyeloidNGSPanel")
+								|| (referral.equalsIgnoreCase("MyeloidNGS"))){
+							referral = "Myeloid";
+						}
 					}
 					cell.setCellValue(myeloidPipeline + ";referral=" + referral);
 				}
