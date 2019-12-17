@@ -415,7 +415,7 @@ public class ExportSampleSheet {
 				}
 
 				if(select.equalsIgnoreCase("TRUSIGHT")){
-					cell.setCellValue(trusightPipeline + ";sex=" + sex);
+					cell.setCellValue(trusightPipeline + ";sex=" + sex + ";order=" + ws.getPosition().get(i));
 				}else if(select.equalsIgnoreCase("TRUSIGHTONE")){
 					cell.setCellValue(trusightOnePipeline + ";sex=" + sex);
 				}else if(select.equalsIgnoreCase("FH")){

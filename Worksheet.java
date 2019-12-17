@@ -25,6 +25,7 @@ public class Worksheet {
 	private ArrayList<String> first;
 	private ArrayList<String> second;
 	private ArrayList<String> ident;
+	private ArrayList<String> order;
 	
 	public Worksheet(){
 		this.worksheet = new ArrayList<String>();
@@ -41,6 +42,7 @@ public class Worksheet {
 		this.first = new ArrayList<String>();
 		this.second = new ArrayList<String>();
 		this.ident = new ArrayList<String>();
+		this.order = new ArrayList<String>();
 	}
 
 	/**
@@ -264,4 +266,18 @@ public class Worksheet {
 	public void setCRUKIdentifier(String ident) {
 		this.ident.add(ident);
     }
+
+	/**
+	 *
+	 * @return Returns order, The order of the samples on the worksheet.
+	 */
+	public ArrayList<String> getOrder() { return order; }
+
+	/**
+	 *
+	 * @param order The order of the samples on the worksheeet.
+	 */
+	public void setOrder(String order) {
+		this.order.add(order);
+	}
 }
