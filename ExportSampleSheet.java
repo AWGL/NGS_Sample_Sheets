@@ -5,8 +5,8 @@ package nhs.cardiff.genetics.ngssamplesheets;
 
 /**
  * @author Rhys Cooper & Sara Rey
- * @Date 16/09/2019
- * @version 1.5.0
+ * @Date 16/01/2020
+ * @version 1.5.2
  * 
  */
 import java.lang.*;
@@ -309,7 +309,7 @@ public class ExportSampleSheet {
 					// SPECIFIC TO CRUK
 					cell = row.createCell(10);
 					cell.setCellValue(crukPipeline + ";pairs=" + ws.getCRUKIdentifier().get(i) +
-										";sampleType=" + sampleT);
+										";sampleType=" + sampleT + ";dna=0");
 
 				}else if(select.equalsIgnoreCase("TAM")){
 					// SPECIFIC TO TAM
