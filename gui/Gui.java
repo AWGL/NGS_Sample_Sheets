@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 /**
  * @author Rhys Cooper & Sara Rey
  * @Date 22/08/2019
- * @version 1.5.0
+ * @version 1.5.2
  * 
  */
 public class Gui extends Menu {
